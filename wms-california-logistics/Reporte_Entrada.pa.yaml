@@ -1,0 +1,77 @@
+Screens:
+  Reporte_Entrada:
+    Properties:
+      Fill: =RGBA(255, 255, 255, 1)
+      LoadingSpinnerColor: =RGBA(0, 120, 212, 1)
+    Children:
+      - cabezera_12:
+          Control: GroupContainer
+          Variant: ManualLayout
+          Properties:
+            Height: =80
+            Width: =1366
+          Children:
+            - fondo_12:
+                Control: Rectangle
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  BorderStyle: =BorderStyle.None
+                  BorderThickness: =2
+                  DisabledFill: =RGBA(161, 159, 157, 1)
+                  Fill: =varGlobal_Color_Principal
+                  FocusedBorderThickness: =4
+                  Height: =80
+                  HoverFill: =varGlobal_Color_Principal
+                  PressedFill: =varGlobal_Color_Principal
+                  Width: =1366
+            - icono_home_4:
+                Control: Classic/Icon
+                Properties:
+                  BorderColor: =RGBA(0, 0, 0, 0)
+                  Color: =Color.White
+                  DisabledBorderColor: =RGBA(245, 245, 245, 1)
+                  DisabledColor: =RGBA(225, 223, 221, 1)
+                  DisabledFill: =RGBA(0, 0, 0, 0)
+                  FocusedBorderThickness: =4
+                  Height: =52
+                  HoverFill: =RGBA(0, 0, 0, 0)
+                  Icon: =Icon.Home
+                  OnSelect: =Navigate(Pantalla_Inicio,ScreenTransition.CoverRight)
+                  PressedFill: =RGBA(0, 0, 0, 0)
+                  Width: =52
+                  X: =15
+                  Y: =14
+            - titulo_pagina_12:
+                Control: Label
+                Properties:
+                  BorderColor: =RGBA(0, 0, 0, 0)
+                  BorderStyle: =BorderStyle.None
+                  BorderThickness: =2
+                  Color: =Color.White
+                  DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                  DisabledColor: =RGBA(161, 159, 157, 1)
+                  FocusedBorderThickness: =4
+                  Font: =varGlobal_Fuente_Principal
+                  Height: =56
+                  Size: =20
+                  Text: ="Reportes de Entradas"
+                  Width: =374
+                  X: =250
+                  Y: =15
+            - Icon3_2:
+                Control: Classic/Icon
+                Properties:
+                  BorderColor: =RGBA(0, 0, 0, 0)
+                  Color: =Color.White
+                  DisabledBorderColor: =RGBA(245, 245, 245, 1)
+                  DisabledColor: =RGBA(225, 223, 221, 1)
+                  DisabledFill: =RGBA(0, 0, 0, 0)
+                  FocusedBorderThickness: =4
+                  Height: =52
+                  HoverFill: =RGBA(0, 0, 0, 0)
+                  Icon: =Icon.BackArrow
+                  OnSelect: =Navigate(Entradas,ScreenTransition.CoverRight)
+                  PressedFill: =RGBA(0, 0, 0, 0)
+                  Width: =52
+                  X: =96
+                  Y: =14

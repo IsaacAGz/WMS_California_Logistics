@@ -766,8 +766,8 @@ Screens:
                         OnSelect: |
                           =UpdateContext({varMostrarPopupDetalle: false});
                           Set(varModoEditarDetalleEntrada, false);
-                          Set(varTotalCajas, varEntradaActual.Cantidad_bultos);
-                          Patch(WMS_Ordenes_Entrantes, varEntradaActual, {Estado_Detalle: "En captura"});
+                          Set(varTotalCajas, varEntradaCreada.Cantidad_bultos);
+                          Patch(WMS_Ordenes_Entrantes, varEntradaCreada, {Estado_Detalle: "En captura"});
 
                           Reset(cmbGuia);
                           Reset(cmbObservaciones);

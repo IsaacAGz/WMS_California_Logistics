@@ -586,9 +586,7 @@ Screens:
                         DisabledColor: =RGBA(119, 119, 119, 1)
                         Height: =61
                         Icon: =Icon.Camera
-                        OnSelect: |-
-                          =Set(varCajaFotoEditar, ThisItem);
-                          Navigate(Tomar_Foto, ScreenTransition.Cover)
+                        OnSelect: =Navigate(Tomar_Foto, ScreenTransition.Cover)
                         PaddingBottom: =16
                         PaddingLeft: =16
                         PaddingRight: =16

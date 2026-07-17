@@ -1,0 +1,194 @@
+Screens:
+  Pantalla_Inicio:
+    Properties:
+      LoadingSpinnerColor: =RGBA(56, 96, 178, 1)
+    Children:
+      - 01_Image_California:
+          Control: Image
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Height: =346
+            Image: =california
+            Width: =804
+            X: =281
+            Y: =132
+      - 01_Button_Nueva_Plantilla:
+          Control: Classic/Button
+          Properties:
+            BorderColor: =ColorFade(Self.Fill, -15%)
+            Color: =RGBA(255, 255, 255, 1)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            Fill: =varGlobal_Color_Principal
+            Font: =varGlobal_Fuente_Principal
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =ColorFade(Self.Fill, -20%)
+            OnSelect: =Navigate(Entradas, ScreenTransition.Cover)
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            RadiusBottomLeft: =20
+            RadiusBottomRight: =20
+            RadiusTopLeft: =20
+            RadiusTopRight: =20
+            Text: ="Entradas"
+            Width: =320
+            X: =157
+            Y: =479
+      - 01_Forma_Rectangulo_Derechos:
+          Control: Rectangle
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Fill: =RGBA(0, 0, 0, 1)
+            Height: =2
+            Width: =Parent.Width * 0.95
+            X: ='01_Label_Derechos'.X
+            Y: ='01_Label_Derechos'.Y - Self.Height
+      - 01_Label_Derechos:
+          Control: Classic/TextInput
+          Properties:
+            Align: =Align.Center
+            BorderColor: =RGBA(0, 18, 107, 1)
+            BorderThickness: =0
+            Default: =varGlobal_Anio
+            Fill: =RGBA(255, 255, 255, 0)
+            Font: =varGlobal_Fuente_Principal
+            Height: =20
+            HoverBorderColor: =RGBA(0, 18, 107, 1)
+            HoverFill: =RGBA(186, 202, 226, 1)
+            Size: =9
+            Width: =Parent.Width * 0.95
+            X: =36
+            Y: =740
+      - 02_Label_Derechos_2:
+          Control: Classic/TextInput
+          Properties:
+            Align: =Align.Center
+            BorderColor: =RGBA(0, 18, 107, 1)
+            BorderThickness: =0
+            Default: =varGlobal_Version
+            Fill: =RGBA(255, 255, 255, 0)
+            Font: =varGlobal_Fuente_Principal
+            Height: =20
+            HoverBorderColor: =RGBA(0, 18, 107, 1)
+            HoverFill: =RGBA(186, 202, 226, 1)
+            Size: =9
+            TabIndex: =-1
+            Width: =80
+            X: =1260
+            Y: =748
+      - 01_Button_Nueva_Plantilla_1:
+          Control: Classic/Button
+          Properties:
+            BorderColor: =ColorFade(Self.Fill, -15%)
+            Color: =RGBA(255, 255, 255, 1)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            Fill: =varGlobal_Color_Principal
+            Font: =varGlobal_Fuente_Principal
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =ColorFade(Self.Fill, -20%)
+            OnSelect: =Navigate(Catalogo, ScreenTransition.Cover)
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            RadiusBottomLeft: =20
+            RadiusBottomRight: =20
+            RadiusTopLeft: =20
+            RadiusTopRight: =20
+            Text: ="Catalogo"
+            Width: =320
+            X: =891
+            Y: =561
+      - 01_Button_Nueva_Plantilla_4:
+          Control: Classic/Button
+          Properties:
+            BorderColor: =ColorFade(Self.Fill, -15%)
+            Color: =RGBA(255, 255, 255, 1)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            Fill: =varGlobal_Color_Principal
+            Font: =varGlobal_Fuente_Principal
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =ColorFade(Self.Fill, -20%)
+            OnSelect: =Navigate(Salidas_Pendientes, ScreenTransition.Cover)
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            RadiusBottomLeft: =20
+            RadiusBottomRight: =20
+            RadiusTopLeft: =20
+            RadiusTopRight: =20
+            Text: ="Salidas Pendientes"
+            Width: =320
+            X: =523
+            Y: =561
+      - 01_Button_Nueva_Plantilla_5:
+          Control: Classic/Button
+          Properties:
+            BorderColor: =ColorFade(Self.Fill, -15%)
+            Color: =RGBA(255, 255, 255, 1)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            Fill: =varGlobal_Color_Principal
+            Font: =varGlobal_Fuente_Principal
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =ColorFade(Self.Fill, -20%)
+            OnSelect: =Navigate(Cotizacion, ScreenTransition.Cover)
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            RadiusBottomLeft: =20
+            RadiusBottomRight: =20
+            RadiusTopLeft: =20
+            RadiusTopRight: =20
+            Text: ="Cotizacion"
+            Width: =320
+            X: =891
+            Y: =479
+      - 01_Button_Nueva_Plantilla_2:
+          Control: Classic/Button
+          Properties:
+            BorderColor: =ColorFade(Self.Fill, -15%)
+            Color: =RGBA(255, 255, 255, 1)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            Fill: =varGlobal_Color_Principal
+            Font: =varGlobal_Fuente_Principal
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =ColorFade(Self.Fill, -20%)
+            OnSelect: =Navigate(scrEntradasPendientes, ScreenTransition.Cover)
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            RadiusBottomLeft: =20
+            RadiusBottomRight: =20
+            RadiusTopLeft: =20
+            RadiusTopRight: =20
+            Text: ="Entradas Pendientes"
+            Width: =320
+            X: =523
+            Y: =479
+      - 01_Button_Nueva_Plantilla_10:
+          Control: Classic/Button
+          Properties:
+            BorderColor: =ColorFade(Self.Fill, -15%)
+            Color: =RGBA(255, 255, 255, 1)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            Fill: =varGlobal_Color_Principal
+            Font: =varGlobal_Fuente_Principal
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =ColorFade(Self.Fill, -20%)
+            OnSelect: =Navigate(Salidas_Procesadas, ScreenTransition.Cover)
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            RadiusBottomLeft: =20
+            RadiusBottomRight: =20
+            RadiusTopLeft: =20
+            RadiusTopRight: =20
+            Text: ="Salidas"
+            Width: =320
+            X: =157
+            Y: =564

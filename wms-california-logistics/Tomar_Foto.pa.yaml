@@ -175,18 +175,10 @@ Screens:
             HoverColor: =RGBA(255, 255, 255, 1)
             HoverFill: =ColorFade(Self.Fill, -20%)
             OnSelect: |-
-              =If(
-                  !IsBlank(varCajaFotoEditar.ID),
-                  Patch(
-                      WMS_Detalle_Cajas,
-                      LookUp(WMS_Detalle_Cajas, ID = varCajaFotoEditar.ID),
-                      { Foto: varPreviewImage }
-                  ),
-                  Patch(
-                      colDetalleCajasStaging,
-                      varCajaFotoEditar,
-                      { Foto: varPreviewImage }
-                  )
+              =Patch(
+                  'WMS_Detalle_Cajas', 
+                  Gallery1.Selected, 
+                  { Foto: varPreviewImage }
               );
               UpdateContext({varPreviewImage: Blank()});
               UpdateContext({varImageTaken: false});

@@ -1,0 +1,405 @@
+Screens:
+  scrEntradasPendientes:
+    Properties:
+      Fill: =varGlobal_Fill_Pantalla
+      LoadingSpinnerColor: =RGBA(0, 120, 212, 1)
+    Children:
+      - cabezera_19:
+          Control: GroupContainer
+          Variant: ManualLayout
+          Properties:
+            Height: =80
+            Width: =1366
+          Children:
+            - fondo_19:
+                Control: Rectangle
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  BorderStyle: =BorderStyle.None
+                  BorderThickness: =2
+                  DisabledFill: =RGBA(161, 159, 157, 1)
+                  Fill: =varGlobal_Color_Principal
+                  FocusedBorderThickness: =4
+                  Height: =80
+                  HoverFill: =varGlobal_Color_Principal
+                  PressedFill: =varGlobal_Color_Principal
+                  Width: =1366
+            - icono_home_17:
+                Control: Classic/Icon
+                Properties:
+                  BorderColor: =RGBA(0, 0, 0, 0)
+                  Color: =Color.White
+                  DisabledBorderColor: =RGBA(245, 245, 245, 1)
+                  DisabledColor: =RGBA(225, 223, 221, 1)
+                  DisabledFill: =RGBA(0, 0, 0, 0)
+                  FocusedBorderThickness: =4
+                  Height: =52
+                  HoverFill: =RGBA(0, 0, 0, 0)
+                  Icon: =Icon.Home
+                  OnSelect: |-
+                    =
+                    Navigate(Pantalla_Inicio,ScreenTransition.CoverRight)
+                  PressedFill: =RGBA(0, 0, 0, 0)
+                  Width: =52
+                  X: =15
+                  Y: =14
+            - titulo_pagina_19:
+                Control: Label
+                Properties:
+                  BorderColor: =RGBA(0, 0, 0, 0)
+                  BorderStyle: =BorderStyle.None
+                  BorderThickness: =2
+                  Color: =Color.White
+                  DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                  DisabledColor: =RGBA(161, 159, 157, 1)
+                  FocusedBorderThickness: =4
+                  Font: =varGlobal_Fuente_Principal
+                  Height: =56
+                  Size: =20
+                  Text: ="Detalle de Cajas Pendientes"
+                  Width: =461
+                  X: =250
+                  Y: =15
+            - buscador_pendientes:
+                Control: Classic/TextInput
+                Properties:
+                  BorderColor: =RGBA(245, 245, 245, 1)
+                  Color: =RGBA(50, 49, 48, 1)
+                  Default: =
+                  DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                  DisabledColor: =RGBA(161, 159, 157, 1)
+                  DisabledFill: =RGBA(242, 242, 241, 0)
+                  Font: =Font.'Segoe UI'
+                  HintText: ="Buscar por SKU, Cliente o Proveedor..."
+                  HoverBorderColor: =RGBA(16, 110, 190, 1)
+                  HoverColor: =RGBA(50, 49, 48, 1)
+                  HoverFill: =RGBA(255, 255, 255, 1)
+                  PressedBorderColor: =RGBA(0, 120, 212, 1)
+                  PressedColor: =RGBA(50, 49, 48, 1)
+                  PressedFill: =RGBA(255, 255, 255, 1)
+                  RadiusBottomLeft: =0
+                  RadiusBottomRight: =0
+                  RadiusTopLeft: =0
+                  RadiusTopRight: =0
+                  Width: =367
+                  X: =977
+                  Y: =23
+      - Container4_1:
+          Control: GroupContainer
+          Variant: ManualLayout
+          Properties:
+            Fill: =varGlobal_Fill_Contenedor
+            Height: =648
+            RadiusBottomLeft: =20
+            RadiusBottomRight: =20
+            RadiusTopLeft: =20
+            RadiusTopRight: =20
+            Width: =711
+            X: =23
+            Y: =95
+          Children:
+            - Gallery6:
+                Control: Gallery
+                Variant: BrowseLayout_Vertical_TwoTextOneImageVariant_ver5.0
+                Properties:
+                  BorderColor: =RGBA(245, 245, 245, 1)
+                  Height: =648
+                  Items: |-
+                    =If(
+                        IsBlank(buscador_pendientes.Text),
+                        // If search is empty, just filter by status
+                        Filter(
+                            WMS_Ordenes_Entrantes,
+                            Estado_Detalle = "Pendiente"
+                        ),
+                        // If search has text, run your full search filter
+                        Filter(
+                            WMS_Ordenes_Entrantes,
+                            Estado_Detalle = "Pendiente" && (buscador_pendientes.Text in Title || buscador_pendientes.Text in Nombre_Cliente)
+                        )
+                    )
+                  TemplateSize: =70
+                  Width: =711
+                  X: =
+                  Y: =
+                Children:
+                  - Image10:
+                      Control: Image
+                      Properties:
+                        BorderColor: =RGBA(0, 0, 0, 0)
+                        BorderStyle: =BorderStyle.None
+                        BorderThickness: =2
+                        DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                        DisabledFill: =RGBA(0, 0, 0, 0)
+                        FocusedBorderThickness: =4
+                        Height: =50
+                        HoverBorderColor: =RGBA(0, 0, 0, 0)
+                        HoverFill: =RGBA(0, 0, 0, 0)
+                        Image: |-
+                          =If(
+                              IsBlank(ThisItem.Foto_Entrada), 
+                              boxes, 
+                              ThisItem.Foto_Entrada
+                          )
+                        OnSelect: =Select(Parent)
+                        PressedBorderColor: =RGBA(0, 0, 0, 0)
+                        PressedFill: =RGBA(0, 0, 0, 0)
+                        RadiusBottomLeft: =8
+                        RadiusBottomRight: =8
+                        RadiusTopLeft: =8
+                        RadiusTopRight: =8
+                        Width: =53
+                        X: =20
+                        Y: =6
+                  - Title10:
+                      Control: Label
+                      Properties:
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(50, 49, 48, 1)
+                        DisabledColor: =RGBA(161, 159, 157, 1)
+                        Font: =Font.'Segoe UI'
+                        FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                        Height: =Self.Size * 1.8
+                        OnSelect: =Select(Parent)
+                        PaddingBottom: =0
+                        PaddingLeft: =12
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Size: =14
+                        Text: =ThisItem.Nombre
+                        VerticalAlign: =VerticalAlign.Top
+                        Width: =Parent.TemplateWidth - 173
+                        X: =86
+                        Y: =11
+                  - Subtitle5:
+                      Control: Label
+                      Properties:
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(96, 94, 92, 1)
+                        DisabledColor: =RGBA(161, 159, 157, 1)
+                        Font: =Font.'Segoe UI'
+                        FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                        Height: =23
+                        OnSelect: =Select(Parent)
+                        PaddingBottom: =0
+                        PaddingLeft: =12
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Size: =12
+                        Text: =ThisItem.Nombre_Cliente
+                        VerticalAlign: =VerticalAlign.Top
+                        Width: =158
+                        X: =Title10.X
+                        Y: =Title10.Y + Title10.Height
+                  - Label3:
+                      Control: Label
+                      Properties:
+                        BorderColor: =RGBA(0, 0, 0, 0)
+                        BorderStyle: =BorderStyle.None
+                        BorderThickness: =2
+                        Color: =RGBA(96, 94, 92, 1)
+                        DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                        DisabledColor: =RGBA(161, 159, 157, 1)
+                        FocusedBorderThickness: =4
+                        Font: =Font.'Segoe UI'
+                        FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                        Height: =29
+                        Text: |-
+                          ="Fecha de Creacion: " & ThisItem.Fecha_Entrada
+                        Width: =380
+                        X: =272
+                        Y: =30
+                  - NextArrow4:
+                      Control: Classic/Icon
+                      Properties:
+                        AccessibleLabel: =Self.Tooltip
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(0, 0, 0, 1)
+                        DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                        DisabledColor: =RGBA(119, 119, 119, 1)
+                        Height: =50
+                        Icon: =Icon.Edit
+                        OnSelect: |-
+                          =// 1. Set tracking variables using your global naming conventions
+                          Set(varModoEditarDetalleEntrada, false);
+                          Set(varNumeroEntrada, ThisItem.Numero_Entrada); // Match field name (usually Numero_Entrada, not Title)
+                          Set(varTotalCajas, ThisItem.Cantidad_bultos);
+
+                          // 2. CRITICAL FIX: Use varEntradaActual to align with save/cancel code
+                          Set(varEntradaActual, ThisItem); 
+
+                          // 3. CRITICAL FIX: Save original status before changing it to "En captura"
+                          Set(varEstadoDetalleOriginal, ThisItem.Estado_Detalle);
+
+                          // 4. CRITICAL FIX: Pull existing box rows (if any exist) into your staging sandbox
+                          // If it's truly pending, it might have a few partial rows already saved that need to load
+                          If(
+                              IsEmpty(colDetalleCajasStaging),
+                              ClearCollect(
+                                  colDetalleCajasStaging, 
+                                  Filter(WMS_Detalle_Cajas, Numero_Entrada = ThisItem.Numero_Entrada)
+                              );
+                              Set(varTotalCajasOriginales, CountRows(colDetalleCajasStaging))
+                          );
+
+                          // 5. Safely change status to lock it for active capture
+                          Patch(
+                              WMS_Ordenes_Entrantes, 
+                              varEntradaActual, 
+                              { Estado_Detalle: "En captura" }
+                          );
+
+                          // 6. UI cleanup and navigation routing
+                          Reset(buscador_pendientes);
+                          Navigate(scrDetalleCajasEntrada, ScreenTransition.Cover)
+                        PaddingBottom: =16
+                        PaddingLeft: =16
+                        PaddingRight: =16
+                        PaddingTop: =16
+                        Tooltip: ="Ver los detalles del elemento"
+                        Width: =102
+                        X: =620
+                        Y: =9
+                  - Separator7:
+                      Control: Rectangle
+                      Properties:
+                        BorderColor: =RGBA(0, 0, 0, 0)
+                        Fill: =RGBA(214, 221, 224, 1)
+                        Height: =8
+                        OnSelect: =Select(Parent)
+                        Width: =Parent.TemplateWidth
+                        Y: =Parent.TemplateHeight - Self.Height
+                  - Rectangle4:
+                      Control: Rectangle
+                      Properties:
+                        BorderColor: =RGBA(0, 0, 0, 0)
+                        Fill: =varGlobal_Color_Principal
+                        Height: =Parent.TemplateHeight - Separator7.Height
+                        OnSelect: =Select(Parent)
+                        Visible: =ThisItem.IsSelected
+                        Width: =8
+      - Container4:
+          Control: GroupContainer
+          Variant: ManualLayout
+          Properties:
+            Fill: =varGlobal_Fill_Contenedor
+            Height: =648
+            RadiusBottomLeft: =20
+            RadiusBottomRight: =20
+            RadiusTopLeft: =20
+            RadiusTopRight: =20
+            Width: =587
+            X: =753
+            Y: =95
+          Children:
+            - Gallery2:
+                Control: Gallery
+                Variant: BrowseLayout_Vertical_TwoTextOneImageVariant_ver5.0
+                Properties:
+                  BorderColor: =RGBA(245, 245, 245, 1)
+                  Height: =648
+                  Items: |-
+                    =Filter(
+                        'WMS_Detalle_Cajas', 
+                        Numero_Entrada = Gallery6.Selected.Numero_Entrada
+                    )
+                  Selectable: =false
+                  Width: =587
+                Children:
+                  - Image3:
+                      Control: Image
+                      Properties:
+                        BorderColor: =RGBA(0, 0, 0, 0)
+                        BorderStyle: =BorderStyle.None
+                        BorderThickness: =2
+                        DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                        DisabledFill: =RGBA(0, 0, 0, 0)
+                        FocusedBorderThickness: =4
+                        Height: =72
+                        HoverBorderColor: =RGBA(0, 0, 0, 0)
+                        HoverFill: =RGBA(0, 0, 0, 0)
+                        Image: |-
+                          =If(
+                              IsBlank(ThisItem.Foto), 
+                              boxes, 
+                              ThisItem.Foto
+                          )
+                        OnSelect: =Select(Parent)
+                        PressedBorderColor: =RGBA(0, 0, 0, 0)
+                        PressedFill: =RGBA(0, 0, 0, 0)
+                        RadiusBottomLeft: =8
+                        RadiusBottomRight: =8
+                        RadiusTopLeft: =8
+                        RadiusTopRight: =8
+                        Width: =72
+                        X: =16
+                        Y: =(Parent.TemplateHeight / 2) - (Self.Height / 2)
+                  - Title3:
+                      Control: Label
+                      Properties:
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(50, 49, 48, 1)
+                        DisabledColor: =RGBA(161, 159, 157, 1)
+                        Font: =Font.'Segoe UI'
+                        FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                        Height: =Self.Size * 1.8
+                        OnSelect: =Select(Parent)
+                        PaddingBottom: =0
+                        PaddingLeft: =12
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Size: =14
+                        Text: |-
+                          ="Numero de Bulto: " & ThisItem.Numero_Caja
+                        VerticalAlign: =VerticalAlign.Top
+                        Width: =Parent.TemplateWidth - 173
+                        X: =103
+                        Y: =(Parent.TemplateHeight - (Self.Size * 1.8 + Subtitle3.Size * 1.8)) / 2
+                  - Subtitle3:
+                      Control: Label
+                      Properties:
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(96, 94, 92, 1)
+                        DisabledColor: =RGBA(161, 159, 157, 1)
+                        Font: =Font.'Segoe UI'
+                        FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                        Height: =Self.Size * 1.8
+                        OnSelect: =Select(Parent)
+                        PaddingBottom: =0
+                        PaddingLeft: =12
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Size: =12
+                        Text: |-
+                          ="GUIA: " & ThisItem.Guia
+                        VerticalAlign: =VerticalAlign.Top
+                        Width: =Title3.Width
+                        X: =Title3.X
+                        Y: =Title3.Y + Title3.Height
+                  - Separator3:
+                      Control: Rectangle
+                      Properties:
+                        BorderColor: =RGBA(0, 0, 0, 0)
+                        Fill: =RGBA(214, 221, 224, 1)
+                        Height: =8
+                        OnSelect: =Select(Parent)
+                        Width: =Parent.TemplateWidth
+                        Y: =Parent.TemplateHeight - Self.Height
+            - Label4:
+                Control: Label
+                Properties:
+                  BorderColor: =RGBA(0, 0, 0, 0)
+                  BorderStyle: =BorderStyle.None
+                  BorderThickness: =2
+                  Color: =RGBA(50, 49, 48, 1)
+                  DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                  DisabledColor: =RGBA(161, 159, 157, 1)
+                  FocusedBorderThickness: =4
+                  Font: =Font.Lato
+                  FontWeight: =FontWeight.Bold
+                  Height: =66
+                  Text: ="No hay detalles de caja para esta entrada."
+                  Visible: =IsEmpty(Gallery2.AllItems)
+                  Width: =348
+                  X: =119
+                  Y: =18

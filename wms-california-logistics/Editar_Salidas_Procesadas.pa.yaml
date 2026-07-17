@@ -5,88 +5,18 @@ Screens:
       LoadingSpinnerColor: =RGBA(0, 120, 212, 1)
       OnVisible: |-
         =UpdateContext({
-            varConfirmarBorrarEntrada: false,
-            varMostrarPopupBultos: false
+            varConfirmarBorrarEntrada: false
         });
         Set(
-            varSalidaEditar,
+            varEntradaEditar,
             LookUp(
-                WMS_Ordenes_Salidas,
-                Numero_Salida = varSalidaEditar.Numero_Salida
+                WMS_Ordenes_Entrantes,
+                Numero_Entrada = galeria_entradas.Selected.Numero_Entrada
             )
         );
-        ClearCollect(
-            colDetalleCajasStaging,
-            Filter(
-                WMS_Salidas_Detalles,
-                Numero_Salida = varSalidaEditar.Numero_Salida
-            )
-        );
-        Set(
-            varPrimerProveedorSalida,
-            First(
-                Distinct(
-                    ForAll(
-                        Filter(
-                            WMS_Salidas_Detalles,
-                            Numero_Salida = varSalidaEditar.Numero_Salida
-                        ),
-                        LookUp(
-                            WMS_Ordenes_Entrantes,
-                            Numero_Entrada = Numero_Entrada
-                        ).Nombre_Proveedor
-                    ),
-                    Value
-                )
-            ).Value
-        );
-        Set(
-            varTextoGuiasSalida,
-            Concat(
-                Distinct(
-                    ForAll(
-                        Filter(
-                            WMS_Salidas_Detalles,
-                            Numero_Salida = varSalidaEditar.Numero_Salida
-                        ),
-                        LookUp(
-                            WMS_Detalle_Cajas,
-                            Numero_Entrada = Numero_Entrada && Numero_Caja = Numero_Bulto
-                        ).Guia
-                    ),
-                    Value
-                ),
-                Value,
-                Char(10)
-            )
-        );
-        Set(
-            varEstadoSalidaDisplay,
-            Coalesce(
-                First(
-                    Distinct(
-                        ForAll(
-                            Filter(
-                                WMS_Salidas_Detalles,
-                                Numero_Salida = varSalidaEditar.Numero_Salida
-                            ),
-                            LookUp(
-                                WMS_Ordenes_Entrantes,
-                                Numero_Entrada = Numero_Entrada
-                            ).Estado
-                        ),
-                        Value
-                    )
-                ).Value,
-                varSalidaEditar.Estado,
-                "Procesada"
-            )
-        );
-        Set(varTotalCajasOriginales, CountRows(colDetalleCajasStaging));
         Reset(cmbEditProveedor_1);
         Reset(txtEditGuia_1);
         Reset(txtEditObservaciones_1);
-        Reset(Dropdown1);
     Children:
       - Contenedor_Detalle_Entrada_1:
           Control: GroupContainer
@@ -133,13 +63,9 @@ Screens:
                 Control: ModernCombobox
                 Properties:
                   DefaultSelectedItems: |-
-                    =If(
-                        IsBlank(varPrimerProveedorSalida),
-                        [],
-                        Filter(
-                            WMS_Catalogo_Proveedor,
-                            Nombre = varPrimerProveedorSalida
-                        )
+                    =Filter(
+                        WMS_Catalogo_Proveedor,
+                        Nombre = varSalidaEditar.Proovedor
                     )
                   FontWeight: =FontWeight.Bold
                   InputTextPlaceholder: ="Seleccionar Proveedor"
@@ -163,11 +89,10 @@ Screens:
             - txtEditGuia_1:
                 Control: ModernTextInput
                 Properties:
-                  Default: =varTextoGuiasSalida
+                  Default: =Text(varSalidaEditar.Guia)
                   FontWeight: =FontWeight.Bold
-                  Height: =98
+                  Height: =44
                   Placeholder: ="Guia"
-                  Type: =TextInputType.Multiline
                   Width: =200
                   X: =360
                   Y: =72
@@ -194,6 +119,19 @@ Screens:
                   Width: =401
                   X: =600
                   Y: =72
+            - lblEditEstadoValor_1:
+                Control: Label
+                Properties:
+                  Color: =RGBA(96, 94, 92, 1)
+                  Font: =Font.Lato
+                  FontWeight: =FontWeight.Bold
+                  Height: =45
+                  Size: =10
+                  Text: |-
+                    ="Estado: " & varSalidaEditar.Estado & " | Detalle: " & varSalidaEditar.Estado
+                  Width: =300
+                  X: =282
+                  Y: =125
             - 01_Button_Registrar_Entrada_4:
                 Control: Classic/Button
                 Properties:
@@ -207,34 +145,7 @@ Screens:
                   HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
                   HoverColor: =RGBA(255, 255, 255, 1)
                   HoverFill: =ColorFade(Self.Fill, -20%)
-                  OnSelect: |-
-                    =If(
-                        IsBlank(cmbEditProveedor_1.Selected.Nombre),
-                        Notify("Falta seleccionar proveedor", NotificationType.Error),
-                        Patch(
-                            WMS_Ordenes_Salidas,
-                            varSalidaEditar,
-                            {
-                                Provedor: cmbEditProveedor_1.Selected.Nombre,
-                                Guia: txtEditGuia_1.Text,
-                                Observaciones: txtEditObservaciones_1.Text,
-                                Estado: Dropdown1.Selected.Value
-                            }
-                        );
-                        Set(
-                            varSalidaEditar,
-                            LookUp(
-                                WMS_Ordenes_Salidas,
-                                Numero_Salida = varSalidaEditar.Numero_Salida
-                            )
-                        );
-                        Set(varEstadoSalidaDisplay, varSalidaEditar.Estado);
-                        Reset(cmbEditProveedor_1);
-                        Reset(txtEditGuia_1);
-                        Reset(txtEditObservaciones_1);
-                        Reset(Dropdown1);
-                        Notify("Salida guardada correctamente", NotificationType.Success)
-                    )
+                  OnSelect: "=If(\n    IsBlank(cmbEditCliente_1.Selected.Nombre_Cliente),\n    Notify(\"Falta seleccionar cliente\", NotificationType.Error),\n    If(\n        IsBlank(cmbEditProveedor_1.Selected.Nombre),\n        Notify(\"Falta seleccionar proveedor\", NotificationType.Error),\n        If(\n            IsBlank(txtEditCantidadBultos_1.Value) || txtEditCantidadBultos_1.Value <= 0,\n            Notify(\"Cantidad de bultos inválida\", NotificationType.Error),\n            \n            // 1. Calculate if the operator increased the total bultos count\n            // We compare the new input value against the rows currently in our staging collection\n            UpdateContext({\n                varBultosAumentados: txtEditCantidadBultos_1.Value > CountRows(colDetalleCajasStaging)\n            });\n\n            // 2. Commit the header updates to SharePoint\n            Patch(\n                WMS_Ordenes_Entrantes,\n                varEntradaEditar,\n                {\n                    Nombre_Cliente: cmbEditCliente_1.Selected.Nombre_Cliente,\n                    Nombre_Proveedor: cmbEditProveedor_1.Selected.Nombre,\n                    Cantidad_bultos: txtEditCantidadBultos_1.Value,\n                    Guia: Value(txtEditGuia_1.Text),\n                    Observaciones: txtEditObservaciones_1.Text\n                }\n            );\n\n            // 3. Refresh our global record reference with the newly saved data\n            Set(\n                varEntradaEditar,\n                LookUp(\n                    WMS_Ordenes_Entrantes,\n                    Numero_Entrada = varEntradaEditar.Numero_Entrada\n                )\n            );\n\n            // 4. Clear input fields\n            Reset(cmbEditCliente_1);\n            Reset(cmbEditProveedor_1);\n            Reset(txtEditCantidadBultos_1);\n            Reset(txtEditGuia_1);\n            Reset(txtEditObservaciones_1);\n            Notify(\"Entrada guardada correctamente\", NotificationType.Success);\n\n            // 5. Smart Routing: Show popup if bultos increased, otherwise go straight Back\n            If(\n                varBultosAumentados,\n                UpdateContext({ varMostrarPopupBultos: true }),\n                Back()\n            )\n        )\n    )\n)"
                   PressedBorderColor: =Self.Fill
                   PressedColor: =Self.Fill
                   PressedFill: =Self.Color
@@ -242,10 +153,10 @@ Screens:
                   RadiusBottomRight: =20
                   RadiusTopLeft: =20
                   RadiusTopRight: =20
-                  Text: ="Guardar Salida"
+                  Text: ="Guardar Entrada"
                   Width: =200
-                  X: =1063
-                  Y: =44
+                  X: =1065
+                  Y: =100
             - lblEditGuia_3:
                 Control: Label
                 Properties:
@@ -261,18 +172,9 @@ Screens:
             - Dropdown1:
                 Control: ModernDropdown
                 Properties:
-                  Default: |-
-                    =Coalesce(
-                        First(
-                            Filter(
-                                ["Procesada", "Procesado", "Pendiente"],
-                                Value = varEstadoSalidaDisplay
-                            )
-                        ),
-                        {Value: "Procesada"}
-                    )
-                  ItemDisplayText: =ThisItem.Value
-                  Items: =["Procesada", "Procesado", "Pendiente"]
+                  Default: =varSalidaEditar.Estado
+                  ItemDisplayText: =false
+                  Items: =["Procesado", "Pendiente"]
                   X: =24
                   Y: =131
       - Contenedor_Detalle_Entrada_Cajas_1:
@@ -855,8 +757,8 @@ Screens:
                         OnSelect: |
                           =UpdateContext({varMostrarPopupDetalle: false});
                           Set(varModoEditarDetalleEntrada, false);
-                          Set(varTotalCajas, varEntradaActual.Cantidad_bultos);
-                          Patch(WMS_Ordenes_Entrantes, varEntradaActual, {Estado_Detalle: "En captura"});
+                          Set(varTotalCajas, varEntradaCreada.Cantidad_bultos);
+                          Patch(WMS_Ordenes_Entrantes, varEntradaCreada, {Estado_Detalle: "En captura"});
 
                           Reset(cmbGuia);
                           Reset(cmbObservaciones);

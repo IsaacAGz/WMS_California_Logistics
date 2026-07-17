@@ -1,0 +1,512 @@
+Screens:
+  Crear_Entrada:
+    Properties:
+      Fill: =varGlobal_Fill_Pantalla
+      LoadingSpinnerColor: =RGBA(0, 120, 212, 1)
+      OnVisible: |-
+        =UpdateContext({
+            varConfirmarSalida:false,
+            varMostrarPopupDetalle: false
+        });
+    Children:
+      - cabezera_17:
+          Control: GroupContainer
+          Variant: ManualLayout
+          Properties:
+            Height: =80
+            Width: =1366
+          Children:
+            - fondo_17:
+                Control: Rectangle
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  BorderStyle: =BorderStyle.None
+                  BorderThickness: =2
+                  DisabledFill: =RGBA(161, 159, 157, 1)
+                  Fill: =varGlobal_Color_Principal
+                  FocusedBorderThickness: =4
+                  Height: =80
+                  HoverFill: =varGlobal_Color_Principal
+                  PressedFill: =varGlobal_Color_Principal
+                  Width: =1366
+            - icono_home_10:
+                Control: Classic/Icon
+                Properties:
+                  BorderColor: =RGBA(0, 0, 0, 0)
+                  Color: =Color.White
+                  DisabledBorderColor: =RGBA(245, 245, 245, 1)
+                  DisabledColor: =RGBA(225, 223, 221, 1)
+                  DisabledFill: =RGBA(0, 0, 0, 0)
+                  FocusedBorderThickness: =4
+                  Height: =52
+                  HoverFill: =RGBA(0, 0, 0, 0)
+                  Icon: =Icon.Home
+                  OnSelect: |-
+                    =If(
+                        // 1. Condition: Check if ANY of the fields are NOT blank
+                        !IsBlank(cmbNombreCliente.Selected) || 
+                        !IsBlank(cmbNombreProveedor.Selected),
+
+                        // 2. True Action: If fields are filled, trigger the confirmation pop-up
+                        UpdateContext({
+                            varSalirPantallaPrincipal: false,
+                            varSalirAtras: true,
+                            varConfirmarSalida: true
+                        }),
+
+                        // 3. False Action: If everything is empty, navigate straight back
+                        Navigate(Pantalla_Inicio, ScreenTransition.CoverRight)
+                    )
+                  PressedFill: =RGBA(0, 0, 0, 0)
+                  Width: =52
+                  X: =15
+                  Y: =14
+            - Icon3_6:
+                Control: Classic/Icon
+                Properties:
+                  BorderColor: =RGBA(0, 0, 0, 0)
+                  Color: =Color.White
+                  DisabledBorderColor: =RGBA(245, 245, 245, 1)
+                  DisabledColor: =RGBA(225, 223, 221, 1)
+                  DisabledFill: =RGBA(0, 0, 0, 0)
+                  FocusedBorderThickness: =4
+                  Height: =52
+                  HoverFill: =RGBA(0, 0, 0, 0)
+                  Icon: =Icon.BackArrow
+                  OnSelect: |-
+                    =If(
+                        // 1. Condition: Check if ANY of the fields are NOT blank
+                        !IsBlank(cmbNombreCliente.Selected) || 
+                        !IsBlank(cmbNombreProveedor.Selected),
+
+                        // 2. True Action: If fields are filled, trigger the confirmation pop-up
+                        UpdateContext({
+                            varSalirPantallaPrincipal: false,
+                            varSalirAtras: true,
+                            varConfirmarSalida: true
+                        }),
+
+                        // 3. False Action: If everything is empty, navigate straight back
+                        Navigate(Entradas, ScreenTransition.CoverRight)
+                    )
+                  PressedFill: =RGBA(0, 0, 0, 0)
+                  Width: =52
+                  X: =96
+                  Y: =14
+            - titulo_pagina_17:
+                Control: Label
+                Properties:
+                  BorderColor: =RGBA(0, 0, 0, 0)
+                  BorderStyle: =BorderStyle.None
+                  BorderThickness: =2
+                  Color: =Color.White
+                  DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                  DisabledColor: =RGBA(161, 159, 157, 1)
+                  FocusedBorderThickness: =4
+                  Font: =varGlobal_Fuente_Principal
+                  Height: =56
+                  Size: =20
+                  Text: ="Crear Nueva Entrada"
+                  Width: =374
+                  X: =250
+                  Y: =15
+      - Container1_5:
+          Control: GroupContainer
+          Variant: ManualLayout
+          Properties:
+            Fill: =varGlobal_Fill_Contenedor
+            Height: =289
+            RadiusBottomLeft: =20
+            RadiusBottomRight: =20
+            RadiusTopLeft: =20
+            RadiusTopRight: =20
+            Width: =1325
+            X: =20
+            Y: =100
+          Children:
+            - cmbNombreCliente:
+                Control: ModernCombobox
+                Properties:
+                  Font: =
+                  FontWeight: =FontWeight.Bold
+                  InputTextPlaceholder: ="Seleccionar Cliente"
+                  ItemDisplayText: =ThisItem.Nombre_Cliente
+                  Items: =WMS_Catalogo_Clientes
+                  X: =24
+                  Y: =44
+            - txtTotalBultos:
+                Control: ModernNumberInput
+                Properties:
+                  Default: =
+                  HintText: ="Ingrese cantidad"
+                  Min: =1
+                  Precision: =DecimalPrecision.'0'
+                  X: =401
+                  Y: =44
+            - Label1:
+                Control: Label
+                Properties:
+                  BorderColor: =RGBA(0, 0, 0, 0)
+                  BorderStyle: =BorderStyle.None
+                  BorderThickness: =2
+                  DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                  DisabledColor: =RGBA(161, 159, 157, 1)
+                  FocusedBorderThickness: =4
+                  Font: =Font.Lato
+                  FontWeight: =FontWeight.Bold
+                  Height: =32
+                  LineHeight: =1
+                  Size: =10
+                  Text: ="Cantidad de bultos"
+                  Width: =222
+                  X: =401
+                  Y: =12
+            - cmbNombreProveedor:
+                Control: ModernCombobox
+                Properties:
+                  FontWeight: =FontWeight.Bold
+                  InputTextPlaceholder: ="Seleccionar Proveedor"
+                  ItemDisplayText: =ThisItem.Nombre
+                  Items: =WMS_Catalogo_Proveedor
+                  X: =24
+                  Y: =112
+            - cmbObservaciones:
+                Control: ModernTextInput
+                Properties:
+                  Font: =Font.Lato
+                  FontWeight: =FontWeight.Bold
+                  Height: =123
+                  Placeholder: ="Observaciones"
+                  Type: =TextInputType.Multiline
+                  Width: =413
+                  X: =838
+                  Y: =44
+            - cmbGuia:
+                Control: ModernTextInput
+                Properties:
+                  Font: =Font.Lato
+                  FontWeight: =FontWeight.Bold
+                  Height: =44
+                  Placeholder: =""
+                  Type: =TextInputType.Multiline
+                  X: =401
+                  Y: =113
+            - Label1_1:
+                Control: Label
+                Properties:
+                  BorderColor: =RGBA(0, 0, 0, 0)
+                  BorderStyle: =BorderStyle.None
+                  BorderThickness: =2
+                  DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                  DisabledColor: =RGBA(161, 159, 157, 1)
+                  FocusedBorderThickness: =4
+                  Font: =Font.Lato
+                  FontWeight: =FontWeight.Bold
+                  Height: =32
+                  LineHeight: =1
+                  Size: =10
+                  Text: ="Cliente"
+                  Width: =222
+                  X: =24
+                  Y: =12
+            - Label1_2:
+                Control: Label
+                Properties:
+                  BorderColor: =RGBA(0, 0, 0, 0)
+                  BorderStyle: =BorderStyle.None
+                  BorderThickness: =2
+                  DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                  DisabledColor: =RGBA(161, 159, 157, 1)
+                  FocusedBorderThickness: =4
+                  Font: =Font.Lato
+                  FontWeight: =FontWeight.Bold
+                  Height: =32
+                  LineHeight: =1
+                  Size: =10
+                  Text: ="Proveedor"
+                  Width: =222
+                  X: =24
+                  Y: =81
+            - Label1_4:
+                Control: Label
+                Properties:
+                  BorderColor: =RGBA(0, 0, 0, 0)
+                  BorderStyle: =BorderStyle.None
+                  BorderThickness: =2
+                  DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                  DisabledColor: =RGBA(161, 159, 157, 1)
+                  FocusedBorderThickness: =4
+                  Font: =Font.Lato
+                  FontWeight: =FontWeight.Bold
+                  Height: =32
+                  LineHeight: =1
+                  Size: =10
+                  Text: ="GUIA"
+                  Width: =222
+                  X: =401
+                  Y: =81
+            - Label1_5:
+                Control: Label
+                Properties:
+                  BorderColor: =RGBA(0, 0, 0, 0)
+                  BorderStyle: =BorderStyle.None
+                  BorderThickness: =2
+                  DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                  DisabledColor: =RGBA(161, 159, 157, 1)
+                  FocusedBorderThickness: =4
+                  Font: =Font.Lato
+                  FontWeight: =FontWeight.Bold
+                  Height: =32
+                  LineHeight: =1
+                  Size: =10
+                  Text: ="Observaciones"
+                  Width: =222
+                  X: =838
+                  Y: =12
+            - 01_Button_Registrar_Entrada:
+                Control: Classic/Button
+                Properties:
+                  BorderColor: =ColorFade(Self.Fill, -15%)
+                  Color: =RGBA(255, 255, 255, 1)
+                  DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                  Fill: =varGlobal_Color_Principal
+                  Font: =varGlobal_Fuente_Principal
+                  Height: =50
+                  HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                  HoverColor: =RGBA(255, 255, 255, 1)
+                  HoverFill: =ColorFade(Self.Fill, -20%)
+                  OnSelect: "=If(\n    IsBlank(cmbNombreCliente.Selected.Nombre_Cliente),\n    Notify(\"Falta seleccionar cliente\", NotificationType.Error),\n    If(\n        IsBlank(cmbNombreProveedor.Selected.Nombre),\n        Notify(\"Falta seleccionar proveedor\", NotificationType.Error),\n        If(\n            IsBlank(txtTotalBultos.Value) || txtTotalBultos.Value <= 0,\n            Notify(\"Falta cantidad de bultos\", NotificationType.Error),\n\n            // --- 1. Create the Main Entry Header ---\n            // Changed to varEntradaActual to maintain global state\n            Set(\n                varEntradaActual,\n                Patch(\n                    WMS_Ordenes_Entrantes,\n                    Defaults(WMS_Ordenes_Entrantes),\n                    {\n                        Numero_Entrada: \"Pendiente\",\n                        Nombre_Cliente: cmbNombreCliente.Selected.Nombre_Cliente,\n                        Nombre_Proveedor: cmbNombreProveedor.Selected.Nombre,\n                        Cantidad_bultos: txtTotalBultos.Value,\n                        Fecha_Entrada: Now(),\n                        Estado: \"En almacén\",\n                        Estado_Detalle: \"Pendiente\",\n                        Observaciones: cmbObservaciones.Text\n                    }\n                )\n            );\n\n            // --- 2. Generate Serial Number Codes ---\n            Set(\n                varNumeroEntrada,\n                \"ENT-\" & Text(Today(), \"mmddyy\") & \"-\" & Text(varEntradaActual.ID, \"0000\")\n            );\n\n            // --- 3. Update Title tracking code & refresh our global variable ---\n            // We wrap this patch in a Set() so varEntradaActual gets the real \"Numero_Entrada\" value\n            Set(\n                varEntradaActual,\n                Patch(\n                    WMS_Ordenes_Entrantes,\n                    varEntradaActual,\n                    {\n                        Numero_Entrada: varNumeroEntrada\n                    }\n                )\n            );\n\n            Notify(\n                \"Entrada registrada correctamente: \" & varNumeroEntrada,\n                NotificationType.Success\n            );\n\n            UpdateContext({varMostrarPopupDetalle: true})\n            \n        )\n    )\n)"
+                  PressedBorderColor: =Self.Fill
+                  PressedColor: =Self.Fill
+                  PressedFill: =Self.Color
+                  RadiusBottomLeft: =20
+                  RadiusBottomRight: =20
+                  RadiusTopLeft: =20
+                  RadiusTopRight: =20
+                  Text: ="Registrar Entrada"
+                  Width: =235
+                  X: =1016
+                  Y: =214
+      - conPopupDetalleCajas:
+          Control: GroupContainer
+          Variant: ManualLayout
+          Properties:
+            BorderColor: =varGlobal_Color_Principal
+            BorderThickness: =3
+            Fill: =Color.White
+            Height: =194
+            RadiusBottomLeft: =20
+            RadiusBottomRight: =20
+            RadiusTopLeft: =20
+            RadiusTopRight: =20
+            Visible: =varMostrarPopupDetalle
+            Width: =646
+            X: =360
+            Y: =320
+          Children:
+            - lblPreguntaDetalleCajas:
+                Control: Label
+                Properties:
+                  BorderColor: =RGBA(0, 0, 0, 0)
+                  BorderStyle: =BorderStyle.None
+                  BorderThickness: =2
+                  Color: =RGBA(50, 49, 48, 1)
+                  DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                  DisabledColor: =RGBA(161, 159, 157, 1)
+                  FocusedBorderThickness: =4
+                  Font: =Font.'Segoe UI'
+                  FontWeight: =FontWeight.Bold
+                  Height: =75
+                  Text: ="Deseas agregar detalle de cajas ahora?"
+                  Width: =345
+                  X: =133
+                  Y: =7
+            - lblNumeroEntradaPopup:
+                Control: Label
+                Properties:
+                  Align: =Align.Center
+                  BorderColor: =RGBA(0, 0, 0, 0)
+                  BorderStyle: =BorderStyle.None
+                  BorderThickness: =2
+                  Color: =RGBA(50, 49, 48, 1)
+                  DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                  DisabledColor: =RGBA(161, 159, 157, 1)
+                  FocusedBorderThickness: =4
+                  Font: =Font.'Segoe UI'
+                  FontWeight: =FontWeight.Bold
+                  Height: =52
+                  Text: |-
+                    ="Entrada creada: " & varNumeroEntrada
+                  Width: =185
+                  X: =213
+                  Y: =71
+            - btnSiAgregarDetalle:
+                Control: Classic/Button
+                Properties:
+                  BorderColor: =ColorFade(Self.Fill, -15%)
+                  Color: =RGBA(255, 255, 255, 1)
+                  DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                  Fill: =varGlobal_Color_Principal
+                  Font: =varGlobal_Fuente_Principal
+                  Height: =42
+                  HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                  HoverColor: =RGBA(255, 255, 255, 1)
+                  HoverFill: =ColorFade(Self.Fill, -20%)
+                  OnSelect: |
+                    =UpdateContext({varMostrarPopupDetalle: false});
+                    Set(varModoEditarDetalleEntrada, false);
+                    Set(varTotalCajas, varEntradaActual.Cantidad_bultos);
+                    Patch(WMS_Ordenes_Entrantes, varEntradaActual, {Estado_Detalle: "En captura"});
+
+                    Reset(cmbGuia);
+                    Reset(cmbObservaciones);
+                    Reset(cmbNombreCliente);
+                    Reset(txtTotalBultos);
+                    Reset(cmbNombreProveedor);
+
+                    Navigate(scrDetalleCajasEntrada);
+                  PressedBorderColor: =Self.Fill
+                  PressedColor: =Self.Fill
+                  PressedFill: =Self.Color
+                  RadiusBottomLeft: =20
+                  RadiusBottomRight: =20
+                  RadiusTopLeft: =20
+                  RadiusTopRight: =20
+                  Size: =10
+                  Text: ="Si, agregar detalle"
+                  Width: =190
+                  X: =403
+                  Y: =138
+            - btnNoDetalleDespues:
+                Control: Classic/Button
+                Properties:
+                  BorderColor: =ColorFade(Self.Fill, -15%)
+                  Color: =RGBA(255, 255, 255, 1)
+                  DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                  Fill: =RGBA(9, 123, 63, 0.33)
+                  Font: =varGlobal_Fuente_Principal
+                  Height: =42
+                  HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                  HoverColor: =RGBA(255, 255, 255, 1)
+                  HoverFill: =ColorFade(Self.Fill, -20%)
+                  OnSelect: |-
+                    =UpdateContext({varMostrarPopupDetalle: false});
+
+                    Reset(cmbGuia);
+                    Reset(cmbObservaciones);
+                    Reset(cmbNombreCliente);
+                    Reset(txtTotalBultos);
+                    Reset(cmbNombreProveedor);
+
+                    Notify("La entrada quedó pendiente de detalle: " & varNumeroEntrada, NotificationType.Information)
+                  PressedBorderColor: =Self.Fill
+                  PressedColor: =Self.Fill
+                  PressedFill: =Self.Color
+                  RadiusBottomLeft: =20
+                  RadiusBottomRight: =20
+                  RadiusTopLeft: =20
+                  RadiusTopRight: =20
+                  Size: =10
+                  Text: ="No, registrar mas tarde"
+                  Width: =190
+                  X: =77
+                  Y: =138
+      - confirmar_salida_detalles:
+          Control: GroupContainer
+          Variant: ManualLayout
+          Properties:
+            BorderColor: =varGlobal_Color_Principal
+            BorderThickness: =3
+            Fill: =Color.White
+            Height: =194
+            RadiusBottomLeft: =20
+            RadiusBottomRight: =20
+            RadiusTopLeft: =20
+            RadiusTopRight: =20
+            Visible: =varConfirmarSalida
+            Width: =646
+            X: =359
+            Y: =320
+          Children:
+            - lblPreguntaDetalleCajas_1:
+                Control: Label
+                Properties:
+                  Align: =Align.Center
+                  BorderColor: =RGBA(0, 0, 0, 0)
+                  BorderStyle: =BorderStyle.None
+                  BorderThickness: =2
+                  Color: =RGBA(50, 49, 48, 1)
+                  DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                  DisabledColor: =RGBA(161, 159, 157, 1)
+                  FocusedBorderThickness: =4
+                  Font: =Font.'Segoe UI'
+                  FontWeight: =FontWeight.Bold
+                  Height: =116
+                  Text: ="Tiene cambios sin guardar. ¿Está seguro de que desea salir?"
+                  Width: =527
+                  X: =66
+                  Y: =11
+            - btnSiAgregarDetalle_1:
+                Control: Classic/Button
+                Properties:
+                  BorderColor: =ColorFade(Self.Fill, -15%)
+                  Color: =RGBA(255, 255, 255, 1)
+                  DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                  Fill: =varGlobal_Color_Principal
+                  Font: =varGlobal_Fuente_Principal
+                  Height: =42
+                  HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                  HoverColor: =RGBA(255, 255, 255, 1)
+                  HoverFill: =ColorFade(Self.Fill, -20%)
+                  OnSelect: |+
+                    =UpdateContext({varConfirmarSalida: false});
+
+                  PressedBorderColor: =Self.Fill
+                  PressedColor: =Self.Fill
+                  PressedFill: =Self.Color
+                  RadiusBottomLeft: =20
+                  RadiusBottomRight: =20
+                  RadiusTopLeft: =20
+                  RadiusTopRight: =20
+                  Size: =10
+                  Text: ="Continuar"
+                  Width: =190
+                  X: =391
+                  Y: =108
+            - btnNoDetalleDespues_1:
+                Control: Classic/Button
+                Properties:
+                  BorderColor: =ColorFade(Self.Fill, -15%)
+                  Color: =RGBA(255, 255, 255, 1)
+                  DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                  Fill: =RGBA(9, 123, 63, 0.33)
+                  Font: =varGlobal_Fuente_Principal
+                  Height: =42
+                  HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                  HoverColor: =RGBA(255, 255, 255, 1)
+                  HoverFill: =ColorFade(Self.Fill, -20%)
+                  OnSelect: |-
+                    =UpdateContext({varConfirmarSalida: false});
+                    Reset(cmbGuia);
+                    Reset(cmbObservaciones);
+                    Reset(cmbNombreCliente);
+                    Reset(txtTotalBultos);
+                    Reset(cmbNombreProveedor);
+                    If(
+                        varSalirAtras, 
+                        Back(ScreenTransition.CoverRight),
+                        varSalirPantallaPrincipal, 
+                        Navigate(Pantalla_Inicio, ScreenTransition.CoverRight)
+                    )
+                  PressedBorderColor: =Self.Fill
+                  PressedColor: =Self.Fill
+                  PressedFill: =Self.Color
+                  RadiusBottomLeft: =20
+                  RadiusBottomRight: =20
+                  RadiusTopLeft: =20
+                  RadiusTopRight: =20
+                  Size: =10
+                  Text: ="Salir"
+                  Width: =190
+                  X: =78
+                  Y: =108

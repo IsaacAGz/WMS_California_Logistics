@@ -8,8 +8,5 @@ App:
       varGlobal_Fill_Pantalla = RGBA(237, 237, 237, 1);
     OnStart: |-
       =Set(varGlobal_Version, "V.1.0.0");
-      Set(varGlobal_Anio,Concatenate("Creado por Chino Solutions - ",Text(Year(Today()))));
-      Set(varPrimerProveedorSalida, "");
-      Set(varTextoGuiasSalida, "");
-      Set(varEstadoSalidaDisplay, "Procesada")
+      Set(varGlobal_Anio,Concatenate("Creado por Chino Solutions - ",Text(Year(Today()))))
     Theme: =PowerAppsTheme
