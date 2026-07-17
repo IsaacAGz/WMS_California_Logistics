@@ -1,0 +1,205 @@
+Screens:
+  Tomar_Foto:
+    Properties:
+      Fill: =varGlobal_Fill_Pantalla
+      LoadingSpinnerColor: =RGBA(0, 120, 212, 1)
+    Children:
+      - cabezera_20:
+          Control: GroupContainer
+          Variant: ManualLayout
+          Properties:
+            Height: =80
+            Width: =1366
+          Children:
+            - fondo_20:
+                Control: Rectangle
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  BorderStyle: =BorderStyle.None
+                  BorderThickness: =2
+                  DisabledFill: =RGBA(161, 159, 157, 1)
+                  Fill: =varGlobal_Color_Principal
+                  FocusedBorderThickness: =4
+                  Height: =80
+                  HoverFill: =varGlobal_Color_Principal
+                  PressedFill: =varGlobal_Color_Principal
+                  Width: =1366
+            - icono_home_18:
+                Control: Classic/Icon
+                Properties:
+                  BorderColor: =RGBA(0, 0, 0, 0)
+                  Color: =Color.White
+                  DisabledBorderColor: =RGBA(245, 245, 245, 1)
+                  DisabledColor: =RGBA(225, 223, 221, 1)
+                  DisabledFill: =RGBA(0, 0, 0, 0)
+                  FocusedBorderThickness: =4
+                  Height: =52
+                  HoverFill: =RGBA(0, 0, 0, 0)
+                  Icon: =Icon.Home
+                  OnSelect: =Navigate(Pantalla_Inicio,ScreenTransition.CoverRight)
+                  PressedFill: =RGBA(0, 0, 0, 0)
+                  Width: =52
+                  X: =15
+                  Y: =14
+            - Icon3_8:
+                Control: Classic/Icon
+                Properties:
+                  BorderColor: =RGBA(0, 0, 0, 0)
+                  Color: =Color.White
+                  DisabledBorderColor: =RGBA(245, 245, 245, 1)
+                  DisabledColor: =RGBA(225, 223, 221, 1)
+                  DisabledFill: =RGBA(0, 0, 0, 0)
+                  FocusedBorderThickness: =4
+                  Height: =52
+                  HoverFill: =RGBA(0, 0, 0, 0)
+                  Icon: =Icon.BackArrow
+                  OnSelect: =Navigate(scrDetalleCajasEntrada, ScreenTransition.CoverRight)
+                  PressedFill: =RGBA(0, 0, 0, 0)
+                  Width: =52
+                  X: =96
+                  Y: =14
+            - titulo_pagina_20:
+                Control: Label
+                Properties:
+                  BorderColor: =RGBA(0, 0, 0, 0)
+                  BorderStyle: =BorderStyle.None
+                  BorderThickness: =2
+                  Color: =Color.White
+                  DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                  DisabledColor: =RGBA(161, 159, 157, 1)
+                  FocusedBorderThickness: =4
+                  Font: =varGlobal_Fuente_Principal
+                  Height: =51
+                  Size: =20
+                  Text: ="Detalle de Cajas"
+                  Width: =235
+                  X: =250
+                  Y: =15
+            - lblNumeroEntradaDetalle_1:
+                Control: Label
+                Properties:
+                  BorderColor: =RGBA(0, 0, 0, 0)
+                  BorderStyle: =BorderStyle.None
+                  BorderThickness: =2
+                  Color: =Color.White
+                  DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                  DisabledColor: =RGBA(161, 159, 157, 1)
+                  FocusedBorderThickness: =4
+                  Font: =Font.Verdana
+                  Height: =43
+                  Size: =20
+                  Text: |-
+                    ="Entrada: " & varNumeroEntrada
+                  Width: =446
+                  X: =509
+                  Y: =21
+      - Camera1:
+          Control: Camera
+          Properties:
+            BorderColor: =RGBA(0, 0, 0, 0)
+            Camera: =0
+            Height: =543
+            StreamRate: =100
+            Width: =723
+            X: =321
+            Y: =106
+      - Circle1:
+          Control: Circle
+          Properties:
+            BorderColor: =ColorFade(Self.Fill, -15%)
+            BorderThickness: =5
+            DisabledFill: =RGBA(255, 255, 255, 1)
+            Fill: =varGlobal_Color_Principal
+            HoverFill: =ColorFade(Self.Fill, -20%)
+            OnSelect: |
+              =UpdateContext({
+                  varPreviewImage: Camera1.Stream,
+                  varImageTaken: true
+              });
+            Visible: =!varImageTaken
+            X: =632
+            Y: =617
+      - Image7:
+          Control: Image
+          Properties:
+            BorderColor: =RGBA(0, 0, 0, 0)
+            BorderStyle: =BorderStyle.None
+            BorderThickness: =2
+            DisabledBorderColor: =RGBA(0, 0, 0, 0)
+            DisabledFill: =RGBA(0, 0, 0, 0)
+            FocusedBorderThickness: =4
+            Height: =543
+            HoverBorderColor: =RGBA(0, 0, 0, 0)
+            HoverFill: =RGBA(0, 0, 0, 0)
+            Image: =varPreviewImage
+            PressedBorderColor: =RGBA(0, 0, 0, 0)
+            PressedFill: =RGBA(0, 0, 0, 0)
+            Visible: =varImageTaken
+            Width: =723
+            X: =321
+            Y: =106
+      - 01_Button_Nueva_Plantilla_11:
+          Control: Classic/Button
+          Properties:
+            BorderColor: =ColorFade(Self.Fill, -15%)
+            Color: =RGBA(255, 255, 255, 1)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            Fill: =varGlobal_Color_Principal
+            Font: =varGlobal_Fuente_Principal
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =ColorFade(Self.Fill, -20%)
+            OnSelect: |-
+              =UpdateContext({varImageTaken: false})
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            RadiusBottomLeft: =20
+            RadiusBottomRight: =20
+            RadiusTopLeft: =20
+            RadiusTopRight: =20
+            Text: ="Retomar"
+            Visible: =varImageTaken
+            Width: =320
+            X: =321
+            Y: =677
+      - 01_Button_Nueva_Plantilla_12:
+          Control: Classic/Button
+          Properties:
+            BorderColor: =ColorFade(Self.Fill, -15%)
+            Color: =RGBA(255, 255, 255, 1)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            Fill: =varGlobal_Color_Principal
+            Font: =varGlobal_Fuente_Principal
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =ColorFade(Self.Fill, -20%)
+            OnSelect: |-
+              =If(
+                  !IsBlank(varCajaFotoEditar.ID),
+                  Patch(
+                      WMS_Detalle_Cajas,
+                      LookUp(WMS_Detalle_Cajas, ID = varCajaFotoEditar.ID),
+                      { Foto: varPreviewImage }
+                  ),
+                  Patch(
+                      colDetalleCajasStaging,
+                      varCajaFotoEditar,
+                      { Foto: varPreviewImage }
+                  )
+              );
+              UpdateContext({varPreviewImage: Blank()});
+              UpdateContext({varImageTaken: false});
+              Back()
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            RadiusBottomLeft: =20
+            RadiusBottomRight: =20
+            RadiusTopLeft: =20
+            RadiusTopRight: =20
+            Text: ="Guardar"
+            Visible: =varImageTaken
+            Width: =320
+            X: =732
+            Y: =677

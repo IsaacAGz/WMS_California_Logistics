@@ -1,0 +1,690 @@
+Screens:
+  scrDetalleCajasEntrada:
+    Properties:
+      Fill: =varGlobal_Fill_Pantalla
+      LoadingSpinnerColor: =RGBA(0, 120, 212, 1)
+      OnVisible: =false
+    Children:
+      - cabezera_18:
+          Control: GroupContainer
+          Variant: ManualLayout
+          Properties:
+            Height: =80
+            Width: =1366
+          Children:
+            - fondo_18:
+                Control: Rectangle
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  BorderStyle: =BorderStyle.None
+                  BorderThickness: =2
+                  DisabledFill: =RGBA(161, 159, 157, 1)
+                  Fill: =varGlobal_Color_Principal
+                  FocusedBorderThickness: =4
+                  Height: =80
+                  HoverFill: =varGlobal_Color_Principal
+                  PressedFill: =varGlobal_Color_Principal
+                  Width: =1366
+            - icono_home_13:
+                Control: Classic/Icon
+                Properties:
+                  BorderColor: =RGBA(0, 0, 0, 0)
+                  Color: =Color.White
+                  DisabledBorderColor: =RGBA(245, 245, 245, 1)
+                  DisabledColor: =RGBA(225, 223, 221, 1)
+                  DisabledFill: =RGBA(0, 0, 0, 0)
+                  FocusedBorderThickness: =4
+                  Height: =52
+                  HoverFill: =RGBA(0, 0, 0, 0)
+                  Icon: =Icon.Home
+                  OnSelect: "=// 1. Check if anything changed\nIf(\n    CountRows(colCajasBorradas) > 0 Or \n    CountRows(Filter(colDetalleCajasStaging, IsBlank(ID) Or ID = 0)) > 0 Or\n    CountRows(colDetalleCajasStaging) <> varTotalCajasOriginales,\n\n    // PATH A: Changes exist -> Show popup\n    UpdateContext({\n        varSalirAtras: false,\n        varSalirPantallaPrincipal: true,\n        varConfirmarSalida: true\n    }),\n\n    // PATH B: No changes made -> Restore original status and auto-exit\n    Patch(\n        WMS_Ordenes_Entrantes, \n        varEntradaActual, \n        { \n            Estado_Detalle: If(\n                varEstadoDetalleOriginal = \"Completo\", \n                \"Completo\", \n                \"Pendiente\"\n            )\n        }\n    );\n    \n    // Clean up memory\n    Set(varNumeroEntrada, Blank());\n    Set(varEstadoDetalleOriginal, Blank());\n    Set(varTotalCajasOriginales, Blank());\n    Clear(colDetalleCajasStaging);\n    Clear(colCajasBorradas);\n    Navigate(Pantalla_Inicio, ScreenTransition.CoverRight)\n)"
+                  PressedFill: =RGBA(0, 0, 0, 0)
+                  Width: =52
+                  X: =15
+                  Y: =14
+            - Icon3_7:
+                Control: Classic/Icon
+                Properties:
+                  BorderColor: =RGBA(0, 0, 0, 0)
+                  Color: =Color.White
+                  DisabledBorderColor: =RGBA(245, 245, 245, 1)
+                  DisabledColor: =RGBA(225, 223, 221, 1)
+                  DisabledFill: =RGBA(0, 0, 0, 0)
+                  FocusedBorderThickness: =4
+                  Height: =52
+                  HoverFill: =RGBA(0, 0, 0, 0)
+                  Icon: =Icon.BackArrow
+                  OnSelect: "=// 1. Check if anything changed\nIf(\n    CountRows(colCajasBorradas) > 0 Or \n    CountRows(Filter(colDetalleCajasStaging, IsBlank(ID) Or ID = 0)) > 0 Or\n    CountRows(colDetalleCajasStaging) <> varTotalCajasOriginales,\n\n    // PATH A: Changes exist -> Show popup\n    UpdateContext({\n        varSalirAtras: true,\n        varSalirPantallaPrincipal: false,\n        varConfirmarSalida: true\n    }),\n\n    // PATH B: No changes made -> Safely step back WITHOUT wiping out your data\n    // Restoring status to original since we are pausing active \"En captura\" state\n    Patch(\n        WMS_Ordenes_Entrantes, \n        varEntradaActual, \n        { \n            Estado_Detalle: If(\n                varEstadoDetalleOriginal = \"Completo\", \n                \"Completo\", \n                \"Pendiente\"\n            )\n        }\n    );\n    \n    // Crucial: We do NOT run Clear(colDetalleCajasStaging) here!\n    // We leave the collection alive so it's ready when you click back into the details screen.\n    Back()\n)"
+                  PressedFill: =RGBA(0, 0, 0, 0)
+                  Width: =52
+                  X: =96
+                  Y: =14
+            - titulo_pagina_18:
+                Control: Label
+                Properties:
+                  BorderColor: =RGBA(0, 0, 0, 0)
+                  BorderStyle: =BorderStyle.None
+                  BorderThickness: =2
+                  Color: =Color.White
+                  DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                  DisabledColor: =RGBA(161, 159, 157, 1)
+                  FocusedBorderThickness: =4
+                  Font: =varGlobal_Fuente_Principal
+                  Height: =51
+                  Size: =20
+                  Text: ="Detalle de Cajas"
+                  Width: =235
+                  X: =250
+                  Y: =15
+            - lblNumeroEntradaDetalle:
+                Control: Label
+                Properties:
+                  BorderColor: =RGBA(0, 0, 0, 0)
+                  BorderStyle: =BorderStyle.None
+                  BorderThickness: =2
+                  Color: =Color.White
+                  DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                  DisabledColor: =RGBA(161, 159, 157, 1)
+                  FocusedBorderThickness: =4
+                  Font: =Font.Verdana
+                  Height: =43
+                  Size: =20
+                  Text: |-
+                    ="Entrada: " & varNumeroEntrada
+                  Width: =446
+                  X: =509
+                  Y: =21
+      - agregar_detalles_contenedor:
+          Control: GroupContainer
+          Variant: ManualLayout
+          Properties:
+            Fill: =varGlobal_Fill_Contenedor
+            Height: =186
+            RadiusBottomLeft: =20
+            RadiusBottomRight: =20
+            RadiusTopLeft: =20
+            RadiusTopRight: =20
+            Width: =1320
+            X: =23
+            Y: =114
+          Children:
+            - txtAltoCaja:
+                Control: ModernNumberInput
+                Properties:
+                  Precision: =DecimalPrecision.'2'
+                  Width: =127
+                  X: =563
+                  Y: =61
+            - txtLargoCaja:
+                Control: ModernNumberInput
+                Properties:
+                  Precision: =DecimalPrecision.'2'
+                  Width: =127
+                  X: =711
+                  Y: =64
+            - txtAnchoCaja:
+                Control: ModernNumberInput
+                Properties:
+                  Precision: =DecimalPrecision.'2'
+                  Width: =127
+                  X: =860
+                  Y: =64
+            - txtGuiaCaja:
+                Control: ModernTextInput
+                Properties:
+                  Placeholder: ="Guia"
+                  Width: =250
+                  X: =1004
+                  Y: =61
+            - btnGuardarCaja:
+                Control: Classic/Button
+                Properties:
+                  BorderColor: =ColorFade(Self.Fill, -15%)
+                  Color: =RGBA(255, 255, 255, 1)
+                  DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                  Fill: =varGlobal_Color_Principal
+                  Font: =varGlobal_Fuente_Principal
+                  FontWeight: =FontWeight.Bold
+                  Height: =37
+                  HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                  HoverColor: =RGBA(255, 255, 255, 1)
+                  HoverFill: =ColorFade(Self.Fill, -20%)
+                  OnSelect: "=If(\n    IsBlank(dropdownCajaDetalle.Selected.Value) || dropdownCajaDetalle.Selected.Value = \"\",\n    Notify(\"Selecciona una caja.\", NotificationType.Error),\n    \n    If(\n        IsBlank(txtBultoCaja.Selected.Title),\n        Notify(\"Selecciona un tipo de bulto.\", NotificationType.Error),\n\n        // 1. Duplicate Check against LOCAL Collection\n        If(\n            !IsEmpty(\n                Filter(\n                    colDetalleCajasStaging,\n                    Numero_Entrada = varNumeroEntrada &&\n                    Numero_Caja = Value(dropdownCajaDetalle.Selected.Value)\n                )\n            ),\n            Notify(\"Esta caja ya fue agregada a la lista temporal\", NotificationType.Error),\n\n            // 2. Safe to Stage Locally\n            Collect(\n                colDetalleCajasStaging,\n                {\n                    Numero_Entrada: varNumeroEntrada,\n                    Numero_Caja: Value(dropdownCajaDetalle.Selected.Value),\n                    Total_cajas: varTotalCajas,\n                    Alto: txtAltoCaja.Value,\n                    Largo: txtLargoCaja.Value,\n                    Ancho: txtAnchoCaja.Value,\n                    Guia: txtGuiaCaja.Text,\n                    Bulto: txtBultoCaja.Selected.Title,\n                    Fecha_Registro: Now(),\n                    // Cache the client name locally so you don't keep running LookUps\n                    Cliente: varEntradaActual.Nombre_Cliente \n                }\n            );\n            \n            // 3. Clear inputs for the next entry\n            Reset(dropdownCajaDetalle);\n            Reset(txtAltoCaja);\n            Reset(txtLargoCaja);\n            Reset(txtAnchoCaja);\n            Reset(txtGuiaCaja);\n            Reset(txtBultoCaja);\n\n            Notify(\"Caja agregada a la lista\", NotificationType.Information)\n        )\n    )\n)"
+                  PressedBorderColor: =Self.Fill
+                  PressedColor: =Self.Fill
+                  PressedFill: =Self.Color
+                  RadiusBottomLeft: =20
+                  RadiusBottomRight: =20
+                  RadiusTopLeft: =20
+                  RadiusTopRight: =20
+                  Text: ="Guardar"
+                  Width: =157
+                  X: =1113
+                  Y: =125
+            - dropdownCajaDetalle:
+                Control: ModernDropdown
+                Properties:
+                  Height: =31
+                  ItemDisplayText: =ThisItem.Value
+                  Items: |-
+                    =Filter(
+                        Sequence(varEntradaActual.Cantidad_bultos),
+                        IsBlank(
+                            LookUp(
+                                colDetalleCajasStaging,
+                                Numero_Caja = Value
+                            )
+                        )
+                    )
+                  Visible: =varTotalCajas
+                  Width: =249
+                  X: =49
+                  Y: =61
+            - Label11:
+                Control: Label
+                Properties:
+                  BorderColor: =RGBA(0, 0, 0, 0)
+                  BorderStyle: =BorderStyle.None
+                  BorderThickness: =2
+                  Color: =RGBA(50, 49, 48, 1)
+                  DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                  DisabledColor: =RGBA(161, 159, 157, 1)
+                  FocusedBorderThickness: =4
+                  Font: =Font.Lato
+                  FontWeight: =FontWeight.Bold
+                  Height: =36
+                  Text: |-
+                    ="Registradas: " & 
+                    CountRows(colDetalleCajasStaging) & 
+                    " de " & 
+                    varEntradaActual.Cantidad_bultos
+                  Width: =192
+                  X: =49
+                  Y: =125
+            - Label12:
+                Control: Label
+                Properties:
+                  BorderColor: =RGBA(0, 0, 0, 0)
+                  BorderStyle: =BorderStyle.None
+                  BorderThickness: =2
+                  Color: =RGBA(50, 49, 48, 1)
+                  DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                  DisabledColor: =RGBA(161, 159, 157, 1)
+                  FocusedBorderThickness: =4
+                  Font: =Font.Lato
+                  FontWeight: =FontWeight.Bold
+                  Height: =69
+                  Text: |-
+                    ="Capturadas: " & 
+                    Concat(
+                        colDetalleCajasStaging, 
+                        Text(Numero_Caja), 
+                        ", "
+                    )
+                  Width: =354
+                  X: =268
+                  Y: =109
+            - Label2:
+                Control: Label
+                Properties:
+                  BorderColor: =RGBA(0, 0, 0, 0)
+                  BorderStyle: =BorderStyle.None
+                  BorderThickness: =2
+                  Color: =RGBA(50, 49, 48, 1)
+                  DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                  DisabledColor: =RGBA(161, 159, 157, 1)
+                  FocusedBorderThickness: =4
+                  Font: =Font.Lato
+                  FontWeight: =FontWeight.Bold
+                  Height: =28
+                  Text: ="Numero de Caja"
+                  Width: =236
+                  X: =49
+                  Y: =32
+            - Label2_1:
+                Control: Label
+                Properties:
+                  BorderColor: =RGBA(0, 0, 0, 0)
+                  BorderStyle: =BorderStyle.None
+                  BorderThickness: =2
+                  Color: =RGBA(50, 49, 48, 1)
+                  DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                  DisabledColor: =RGBA(161, 159, 157, 1)
+                  FocusedBorderThickness: =4
+                  Font: =Font.Lato
+                  FontWeight: =FontWeight.Bold
+                  Height: =28
+                  Text: ="Alto"
+                  Width: =127
+                  X: =563
+                  Y: =33
+            - Label2_2:
+                Control: Label
+                Properties:
+                  BorderColor: =RGBA(0, 0, 0, 0)
+                  BorderStyle: =BorderStyle.None
+                  BorderThickness: =2
+                  Color: =RGBA(50, 49, 48, 1)
+                  DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                  DisabledColor: =RGBA(161, 159, 157, 1)
+                  FocusedBorderThickness: =4
+                  Font: =Font.Lato
+                  FontWeight: =FontWeight.Bold
+                  Height: =28
+                  Text: ="Largo"
+                  Width: =127
+                  X: =711
+                  Y: =33
+            - Label2_3:
+                Control: Label
+                Properties:
+                  BorderColor: =RGBA(0, 0, 0, 0)
+                  BorderStyle: =BorderStyle.None
+                  BorderThickness: =2
+                  Color: =RGBA(50, 49, 48, 1)
+                  DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                  DisabledColor: =RGBA(161, 159, 157, 1)
+                  FocusedBorderThickness: =4
+                  Font: =Font.Lato
+                  FontWeight: =FontWeight.Bold
+                  Height: =28
+                  Text: ="Ancho"
+                  Width: =127
+                  X: =860
+                  Y: =33
+            - Label2_4:
+                Control: Label
+                Properties:
+                  BorderColor: =RGBA(0, 0, 0, 0)
+                  BorderStyle: =BorderStyle.None
+                  BorderThickness: =2
+                  Color: =RGBA(50, 49, 48, 1)
+                  DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                  DisabledColor: =RGBA(161, 159, 157, 1)
+                  FocusedBorderThickness: =4
+                  Font: =Font.Lato
+                  FontWeight: =FontWeight.Bold
+                  Height: =28
+                  Text: ="GUIA"
+                  Width: =127
+                  X: =1004
+                  Y: =33
+            - Label2_5:
+                Control: Label
+                Properties:
+                  BorderColor: =RGBA(0, 0, 0, 0)
+                  BorderStyle: =BorderStyle.None
+                  BorderThickness: =2
+                  Color: =RGBA(50, 49, 48, 1)
+                  DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                  DisabledColor: =RGBA(161, 159, 157, 1)
+                  FocusedBorderThickness: =4
+                  Font: =Font.Lato
+                  FontWeight: =FontWeight.Bold
+                  Height: =28
+                  Text: ="Tipo de Bulto"
+                  Width: =127
+                  X: =310
+                  Y: =33
+            - txtBultoCaja:
+                Control: ModernDropdown
+                Properties:
+                  ItemDisplayText: =ThisItem.'Title'
+                  Items: =WMS_Catalogo_Bultos
+                  Width: =240
+                  X: =310
+                  Y: =61
+      - ver_detalles_agregados_conenedor:
+          Control: GroupContainer
+          Variant: ManualLayout
+          Properties:
+            Fill: =varGlobal_Fill_Contenedor
+            Height: =390
+            RadiusBottomLeft: =20
+            RadiusBottomRight: =20
+            RadiusTopLeft: =20
+            RadiusTopRight: =20
+            Width: =1320
+            X: =23
+            Y: =340
+          Children:
+            - btnGuardarCaja_2:
+                Control: Classic/Button
+                Properties:
+                  BorderColor: =ColorFade(Self.Fill, -15%)
+                  Color: =RGBA(255, 255, 255, 1)
+                  DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                  Fill: =varGlobal_Color_Principal
+                  Font: =varGlobal_Fuente_Principal
+                  FontWeight: =FontWeight.Bold
+                  Height: =37
+                  HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                  HoverColor: =RGBA(255, 255, 255, 1)
+                  HoverFill: =ColorFade(Self.Fill, -20%)
+                  OnSelect: |
+                    =// 1. Delete any removed boxes from the live data source using their IDs
+                    If(
+                        CountRows(colCajasBorradas) > 0,
+                        Remove(
+                            WMS_Detalle_Cajas, 
+                            Filter(WMS_Detalle_Cajas, ID in colCajasBorradas.ID)
+                        );
+                        Clear(colCajasBorradas)
+                    );
+                    // 2.A Bulk CREATE (New boxes with ID = 0 or blank)
+                    // We use Coalesce to guarantee a number is sent to SharePoint, preventing null-pointer database errors.
+                    Patch(
+                        WMS_Detalle_Cajas,
+                        ForAll(
+                            Filter(colDetalleCajasStaging, IsBlank(ID) || ID <= 0) As _newCaja,
+                            {
+                                Numero_Entrada: Coalesce(varEntradaActual.Numero_Entrada, "PENDIENTE"), 
+                                Numero_Caja: Coalesce(Value(_newCaja.Numero_Caja), 0),
+                                Total_cajas: Coalesce(Value(_newCaja.Total_cajas), 0),
+                                Alto: Coalesce(Value(_newCaja.Alto), 0),
+                                Largo: Coalesce(Value(_newCaja.Largo), 0),
+                                Ancho: Coalesce(Value(_newCaja.Ancho), 0),
+                                Guia: Coalesce(_newCaja.Guia, ""),
+                                Bulto: Coalesce(_newCaja.Bulto, ""),
+                                Fecha_Registro: Today(),
+                                Cliente: Coalesce(_newCaja.Cliente, "")
+                            }
+                        )
+                    );
+
+                    // 2.B Bulk UPDATE (Existing boxes with valid IDs)
+                    Patch(
+                        WMS_Detalle_Cajas,
+                        ForAll(
+                            Filter(colDetalleCajasStaging, ID > 0) As _oldCaja,
+                            {
+                                ID: _oldCaja.ID,
+                                Numero_Entrada: Coalesce(_oldCaja.Numero_Entrada, varEntradaActual.Numero_Entrada),
+                                Numero_Caja: Coalesce(Value(_oldCaja.Numero_Caja), 0),
+                                Total_cajas: Coalesce(Value(_oldCaja.Total_cajas), 0),
+                                Alto: Coalesce(Value(_oldCaja.Alto), 0),
+                                Largo: Coalesce(Value(_oldCaja.Largo), 0),
+                                Ancho: Coalesce(Value(_oldCaja.Ancho), 0),
+                                Guia: Coalesce(_oldCaja.Guia, ""),
+                                Bulto: Coalesce(_oldCaja.Bulto, ""),
+                                Fecha_Registro: Today(),
+                                Cliente: Coalesce(_oldCaja.Cliente, "")
+                            }
+                        )
+                    );
+
+                    // 3. Update the Parent Header Status based on count
+                    If(
+                        !IsBlank(varEntradaActual),
+                        Patch(
+                            WMS_Ordenes_Entrantes,
+                            varEntradaActual,
+                            {
+                                Estado_Detalle: If(
+                                    CountRows(colDetalleCajasStaging) >= Value(varEntradaActual.Cantidad_bultos),
+                                    "Completo",
+                                    "Pendiente"
+                                )
+                            }
+                        )
+                    );
+
+                    // 4. Clear the staging collection
+                    Clear(colDetalleCajasStaging);
+
+                    // 5. Notify the user
+                    Notify("¡Detalle de bultos guardado exitosamente!", NotificationType.Success);
+
+                    // 6. Clean up global state variables to prevent data bleed
+                    Set(varEstadoDetalleOriginal, Blank());
+                    Set(varNumeroEntrada, Blank());
+                    Set(varEntradaActual, Blank());
+
+                    Navigate(Entradas, ScreenTransition.CoverRight)
+                  PressedBorderColor: =Self.Fill
+                  PressedColor: =Self.Fill
+                  PressedFill: =Self.Color
+                  RadiusBottomLeft: =20
+                  RadiusBottomRight: =20
+                  RadiusTopLeft: =20
+                  RadiusTopRight: =20
+                  Text: ="Finalizar captura"
+                  Width: =238
+                  X: =1047
+                  Y: =309
+            - Gallery1:
+                Control: Gallery
+                Variant: BrowseLayout_Vertical_TwoTextOneImageVariant_ver5.0
+                Properties:
+                  BorderColor: =RGBA(245, 245, 245, 1)
+                  Height: =390
+                  Items: =colDetalleCajasStaging
+                  Width: =1006
+                Children:
+                  - Image1:
+                      Control: Image
+                      Properties:
+                        BorderColor: =RGBA(0, 0, 0, 0)
+                        BorderStyle: =BorderStyle.None
+                        BorderThickness: =2
+                        DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                        DisabledFill: =RGBA(0, 0, 0, 0)
+                        FocusedBorderThickness: =4
+                        Height: =72
+                        HoverBorderColor: =RGBA(0, 0, 0, 0)
+                        HoverFill: =RGBA(0, 0, 0, 0)
+                        Image: |-
+                          =If(
+                              IsBlank(ThisItem.Bulto), 
+                              boxes, // Your default fallback image control or media asset
+                              LookUp(WMS_Catalogo_Bultos, Title = ThisItem.Bulto).Foto
+                          )
+                        OnSelect: =Select(Parent)
+                        PressedBorderColor: =RGBA(0, 0, 0, 0)
+                        PressedFill: =RGBA(0, 0, 0, 0)
+                        RadiusBottomLeft: =8
+                        RadiusBottomRight: =8
+                        RadiusTopLeft: =8
+                        RadiusTopRight: =8
+                        Width: =72
+                        X: =16
+                        Y: =(Parent.TemplateHeight / 2) - (Self.Height / 2)
+                  - Title1:
+                      Control: Label
+                      Properties:
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(50, 49, 48, 1)
+                        DisabledColor: =RGBA(161, 159, 157, 1)
+                        Font: =Font.'Segoe UI'
+                        FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                        Height: =25
+                        OnSelect: =Select(Parent)
+                        PaddingBottom: =0
+                        PaddingLeft: =12
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Size: =14
+                        Text: |-
+                          ="Bulto Numero: " & ThisItem.Numero_Caja
+                        VerticalAlign: =VerticalAlign.Top
+                        Width: =164
+                        X: =103
+                        Y: =(Parent.TemplateHeight - (Self.Size * 1.8 + Subtitle1.Size * 1.8)) / 2
+                  - Subtitle1:
+                      Control: Label
+                      Properties:
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(96, 94, 92, 1)
+                        DisabledColor: =RGBA(161, 159, 157, 1)
+                        Font: =Font.'Segoe UI'
+                        FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                        Height: =23
+                        OnSelect: =Select(Parent)
+                        PaddingBottom: =0
+                        PaddingLeft: =12
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Size: =12
+                        Text: |-
+                          ="GUIA: " & ThisItem.Guia
+                        VerticalAlign: =VerticalAlign.Top
+                        Width: =148
+                        X: =Title1.X
+                        Y: =Title1.Y + Title1.Height
+                  - NextArrow2:
+                      Control: Classic/Icon
+                      Properties:
+                        AccessibleLabel: =Self.Tooltip
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(166, 166, 166, 1)
+                        DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                        DisabledColor: =RGBA(119, 119, 119, 1)
+                        Height: =61
+                        Icon: =Icon.Trash
+                        OnSelect: |-
+                          =// 1. If the item already exists in SharePoint (has an ID), log it for deletion later
+                          If(
+                              ThisItem.ID > 0,
+                              Collect(colCajasBorradas, ThisItem)
+                          );
+
+                          // 2. Remove it from your active display collection instantly
+                          Remove(colDetalleCajasStaging, ThisItem)
+                        PaddingBottom: =16
+                        PaddingLeft: =16
+                        PaddingRight: =16
+                        PaddingTop: =16
+                        Tooltip: ="View item details"
+                        Width: =70
+                        X: =903
+                        Y: =28
+                  - Separator1:
+                      Control: Rectangle
+                      Properties:
+                        BorderColor: =RGBA(0, 0, 0, 0)
+                        Fill: =RGBA(255, 255, 255, 1)
+                        Height: =8
+                        OnSelect: =Select(Parent)
+                        Width: =Parent.TemplateWidth
+                        Y: =Parent.TemplateHeight - Self.Height
+                  - Rectangle1:
+                      Control: Rectangle
+                      Properties:
+                        BorderColor: =RGBA(0, 0, 0, 0)
+                        Fill: =varGlobal_Color_Principal
+                        Height: =Parent.TemplateHeight - Separator1.Height
+                        OnSelect: =Select(Parent)
+                        Visible: =ThisItem.IsSelected
+                        Width: =4
+                  - NextArrow2_1:
+                      Control: Classic/Icon
+                      Properties:
+                        AccessibleLabel: =Self.Tooltip
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(166, 166, 166, 1)
+                        DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                        DisabledColor: =RGBA(119, 119, 119, 1)
+                        Height: =61
+                        Icon: =Icon.Camera
+                        OnSelect: |-
+                          =Set(varCajaFotoEditar, ThisItem);
+                          Navigate(Tomar_Foto, ScreenTransition.Cover)
+                        PaddingBottom: =16
+                        PaddingLeft: =16
+                        PaddingRight: =16
+                        PaddingTop: =16
+                        Tooltip: ="View item details"
+                        Width: =70
+                        X: =833
+                        Y: =27
+      - confirmar_salida_detalles_1:
+          Control: GroupContainer
+          Variant: ManualLayout
+          Properties:
+            BorderColor: =varGlobal_Color_Principal
+            BorderThickness: =3
+            Fill: =Color.White
+            Height: =194
+            RadiusBottomLeft: =20
+            RadiusBottomRight: =20
+            RadiusTopLeft: =20
+            RadiusTopRight: =20
+            Visible: =varConfirmarSalida
+            Width: =646
+            X: =359
+            Y: =320
+          Children:
+            - lblPreguntaDetalleCajas_2:
+                Control: Label
+                Properties:
+                  Align: =Align.Center
+                  BorderColor: =RGBA(0, 0, 0, 0)
+                  BorderStyle: =BorderStyle.None
+                  BorderThickness: =2
+                  Color: =RGBA(50, 49, 48, 1)
+                  DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                  DisabledColor: =RGBA(161, 159, 157, 1)
+                  FocusedBorderThickness: =4
+                  Font: =Font.'Segoe UI'
+                  FontWeight: =FontWeight.Bold
+                  Height: =116
+                  Text: |-
+                    ="¿Está seguro de que desea salir? 
+                    La entrada se cambiara a Pendiente"
+                  Width: =527
+                  X: =66
+                  Y: =11
+            - btnSiAgregarDetalle_2:
+                Control: Classic/Button
+                Properties:
+                  BorderColor: =ColorFade(Self.Fill, -15%)
+                  Color: =RGBA(255, 255, 255, 1)
+                  DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                  Fill: =varGlobal_Color_Principal
+                  Font: =Font.Verdana
+                  Height: =42
+                  HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                  HoverColor: =RGBA(255, 255, 255, 1)
+                  HoverFill: =ColorFade(Self.Fill, -20%)
+                  OnSelect: |+
+                    =UpdateContext({
+                        varConfirmarSalida: false
+                    })
+
+                  PressedBorderColor: =Self.Fill
+                  PressedColor: =Self.Fill
+                  PressedFill: =Self.Color
+                  RadiusBottomLeft: =20
+                  RadiusBottomRight: =20
+                  RadiusTopLeft: =20
+                  RadiusTopRight: =20
+                  Size: =10
+                  Text: ="Continuar"
+                  Width: =190
+                  X: =391
+                  Y: =108
+            - btnNoDetalleDespues_2:
+                Control: Classic/Button
+                Properties:
+                  BorderColor: =ColorFade(Self.Fill, -15%)
+                  Color: =RGBA(255, 255, 255, 1)
+                  DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                  Fill: =RGBA(9, 123, 63, 0.33)
+                  Font: =varGlobal_Fuente_Principal
+                  Height: =42
+                  HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+                  HoverColor: =RGBA(255, 255, 255, 1)
+                  HoverFill: =ColorFade(Self.Fill, -20%)
+                  OnSelect: "=// 1. Hide the confirmation popup window\nUpdateContext({ varConfirmarSalida: false });\n\n// 2. Clear forgotten deletions tracking\nClear(colCajasBorradas);\n\n// 3. FIX: Instead of clearing, reload the original baseline from SharePoint \n// This restores the gallery on the 'Editar Entrada' screen to its saved state!\nClearCollect(\n    colDetalleCajasStaging, \n    Filter(WMS_Detalle_Cajas, Numero_Entrada = varEntradaActual.Numero_Entrada)\n);\n\n// 4. Reset input controls on the screen interface\nReset(dropdownCajaDetalle);\nReset(txtAltoCaja);\nReset(txtLargoCaja);\nReset(txtAnchoCaja);\nReset(cmbGuia);\n\n// 5. Intelligently restore the parent ticket header status to its pre-edit state\nPatch(\n    WMS_Ordenes_Entrantes, \n    varEntradaActual, \n    { \n        Estado_Detalle: If(\n            varEstadoDetalleOriginal = \"Completo\", \n            \"Completo\", \n            \"Pendiente\"\n        )\n    }\n);\n\n// 6. Wipe out global variables used exclusively for this box details session\nSet(varNumeroEntrada, Blank());\nSet(varEstadoDetalleOriginal, Blank());\n\n// 7. Navigate away depending on which screen route brought the user here\nIf(\n    varSalirAtras,\n    Back(),\n    \n    varSalirPantallaPrincipal,\n\n    Clear(colDetalleCajasStaging);\n    Navigate(Pantalla_Inicio, ScreenTransition.CoverRight)\n\n);"
+                  PressedBorderColor: =Self.Fill
+                  PressedColor: =Self.Fill
+                  PressedFill: =Self.Color
+                  RadiusBottomLeft: =20
+                  RadiusBottomRight: =20
+                  RadiusTopLeft: =20
+                  RadiusTopRight: =20
+                  Size: =10
+                  Text: ="Salir"
+                  Width: =190
+                  X: =78
+                  Y: =108

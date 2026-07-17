@@ -1,0 +1,15 @@
+App:
+  Properties:
+    Formulas: |-
+      =varGlobal_Color_Principal = RGBA(9, 123, 63, 1);
+      varGlobal_Usuario_Actual = User();
+      varGlobal_Fuente_Principal = Font.Verdana;
+      varGlobal_Fill_Contenedor = RGBA(255, 255, 255, 1);
+      varGlobal_Fill_Pantalla = RGBA(237, 237, 237, 1);
+    OnStart: |-
+      =Set(varGlobal_Version, "V.1.0.0");
+      Set(varGlobal_Anio,Concatenate("Creado por Chino Solutions - ",Text(Year(Today()))));
+      Set(varPrimerProveedorSalida, "");
+      Set(varTextoGuiasSalida, "");
+      Set(varEstadoSalidaDisplay, "Procesada")
+    Theme: =PowerAppsTheme
