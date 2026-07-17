@@ -354,7 +354,7 @@ Screens:
                   HoverFill: =ColorFade(Self.Fill, -20%)
                   OnSelect: |
                     =UpdateContext({varMostrarPopupDetalle: false});
-                    Set(varModoEditarDetalleEntrada, false);
+                    Set(varPantallaOrigenDetalle, "Crear_Entrada");
                     Set(varTotalCajas, varEntradaActual.Cantidad_bultos);
                     Patch(WMS_Ordenes_Entrantes, varEntradaActual, {Estado_Detalle: "En captura"});
 

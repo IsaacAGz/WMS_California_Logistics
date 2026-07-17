@@ -370,7 +370,40 @@ Screens:
                   HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
                   HoverColor: =RGBA(255, 255, 255, 1)
                   HoverFill: =ColorFade(Self.Fill, -20%)
-                  OnSelect: "=// 1. Set tracking variables for the current entry session\nSet(varNumeroEntrada, varEntradaEditar.Numero_Entrada);\nSet(varTotalCajas, varEntradaEditar.Cantidad_bultos);\nSet(varModoEditarDetalleEntrada, true);\nSet(varEntradaActual, varEntradaEditar);\n\n// 2. Capture the original status BEFORE updating it to \"En captura\"\nSet(varEstadoDetalleOriginal, varEntradaEditar.Estado_Detalle);\n\n// 3. NEW STATE GUARD: Only load from SharePoint if the staging collection is currently empty\n// This prevents wiping out unsaved changes if they go back to 'Editar Entradas' and return here.\nIf(\n    IsEmpty(colDetalleCajasStaging),\n    \n    // First time entry -> Load from the database and set the baseline count\n    ClearCollect(\n        colDetalleCajasStaging, \n        Filter(WMS_Detalle_Cajas, Numero_Entrada = varEntradaEditar.Numero_Entrada)\n    );\n    Set(varTotalCajasOriginales, CountRows(colDetalleCajasStaging))\n);\n\n// 4. Update status in SharePoint to lock it for editing\nPatch(\n    WMS_Ordenes_Entrantes,\n    varEntradaActual,\n    { Estado_Detalle: \"En captura\" }\n);\n\n// 5. Navigate to the box details configuration screen\nNavigate(scrDetalleCajasEntrada, ScreenTransition.Cover)"
+                  OnSelect: |-
+                    =// 1. Set tracking variables for the current entry session
+                    Set(varNumeroEntrada, varEntradaEditar.Numero_Entrada);
+                    Set(varTotalCajas, varEntradaEditar.Cantidad_bultos);
+                    Set(varPantallaOrigenDetalle, "Editar_Entradas");
+                    Set(varEntradaActual, varEntradaEditar);
+
+                    // 2. Capture the original status BEFORE updating it to "En captura"
+                    Set(varEstadoDetalleOriginal, varEntradaEditar.Estado_Detalle);
+
+                    // 3. NEW STATE GUARD: Only load from SharePoint if the staging collection is currently empty
+                    // This prevents wiping out unsaved changes if they go back to 'Editar Entradas' and return here.
+                    If(
+                        IsEmpty(colDetalleCajasStaging) ||
+                        First(colDetalleCajasStaging).Numero_Entrada <> varEntradaEditar.Numero_Entrada,
+                        ClearCollect(
+                            colDetalleCajasStaging,
+                            Filter(
+                                WMS_Detalle_Cajas,
+                                Numero_Entrada = varEntradaEditar.Numero_Entrada
+                            )
+                        );
+                        Set(varTotalCajasOriginales, CountRows(colDetalleCajasStaging))
+                    );
+
+                    // 4. Update status in SharePoint to lock it for editing
+                    Patch(
+                        WMS_Ordenes_Entrantes,
+                        varEntradaActual,
+                        { Estado_Detalle: "En captura" }
+                    );
+
+                    // 5. Navigate to the box details configuration screen
+                    Navigate(scrDetalleCajasEntrada, ScreenTransition.Cover)
                   PressedBorderColor: =Self.Fill
                   PressedColor: =Self.Fill
                   PressedFill: =Self.Color
@@ -629,10 +662,14 @@ Screens:
 
                     // 3. Initialize collection state if empty (preserves text updates)
                     If(
-                        IsEmpty(colDetalleCajasStaging),
+                        IsEmpty(colDetalleCajasStaging) ||
+                        First(colDetalleCajasStaging).Numero_Entrada <> varEntradaEditar.Numero_Entrada,
                         ClearCollect(
-                            colDetalleCajasStaging, 
-                            Filter(WMS_Detalle_Cajas, Numero_Entrada = varEntradaEditar.Numero_Entrada)
+                            colDetalleCajasStaging,
+                            Filter(
+                                WMS_Detalle_Cajas,
+                                Numero_Entrada = varEntradaEditar.Numero_Entrada
+                            )
                         );
                         Set(varTotalCajasOriginales, CountRows(colDetalleCajasStaging))
                     );

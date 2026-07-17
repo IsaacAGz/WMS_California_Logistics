@@ -221,7 +221,7 @@ Screens:
                         Icon: =Icon.Edit
                         OnSelect: |-
                           =// 1. Set tracking variables using your global naming conventions
-                          Set(varModoEditarDetalleEntrada, false);
+                          Set(varPantallaOrigenDetalle, "scrEntradasPendientes");
                           Set(varNumeroEntrada, ThisItem.Numero_Entrada); // Match field name (usually Numero_Entrada, not Title)
                           Set(varTotalCajas, ThisItem.Cantidad_bultos);
 
@@ -234,10 +234,14 @@ Screens:
                           // 4. CRITICAL FIX: Pull existing box rows (if any exist) into your staging sandbox
                           // If it's truly pending, it might have a few partial rows already saved that need to load
                           If(
-                              IsEmpty(colDetalleCajasStaging),
+                              IsEmpty(colDetalleCajasStaging) ||
+                              First(colDetalleCajasStaging).Numero_Entrada <> ThisItem.Numero_Entrada,
                               ClearCollect(
-                                  colDetalleCajasStaging, 
-                                  Filter(WMS_Detalle_Cajas, Numero_Entrada = ThisItem.Numero_Entrada)
+                                  colDetalleCajasStaging,
+                                  Filter(
+                                      WMS_Detalle_Cajas,
+                                      Numero_Entrada = ThisItem.Numero_Entrada
+                                  )
                               );
                               Set(varTotalCajasOriginales, CountRows(colDetalleCajasStaging))
                           );

@@ -149,7 +149,7 @@ Screens:
                   HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
                   HoverColor: =RGBA(255, 255, 255, 1)
                   HoverFill: =ColorFade(Self.Fill, -20%)
-                  OnSelect: "=If(\n    IsBlank(dropdownCajaDetalle.Selected.Value) || dropdownCajaDetalle.Selected.Value = \"\",\n    Notify(\"Selecciona una caja.\", NotificationType.Error),\n    \n    If(\n        IsBlank(txtBultoCaja.Selected.Title),\n        Notify(\"Selecciona un tipo de bulto.\", NotificationType.Error),\n\n        // 1. Duplicate Check against LOCAL Collection\n        If(\n            !IsEmpty(\n                Filter(\n                    colDetalleCajasStaging,\n                    Numero_Entrada = varNumeroEntrada &&\n                    Numero_Caja = Value(dropdownCajaDetalle.Selected.Value)\n                )\n            ),\n            Notify(\"Esta caja ya fue agregada a la lista temporal\", NotificationType.Error),\n\n            // 2. Safe to Stage Locally\n            Collect(\n                colDetalleCajasStaging,\n                {\n                    Numero_Entrada: varNumeroEntrada,\n                    Numero_Caja: Value(dropdownCajaDetalle.Selected.Value),\n                    Total_cajas: varTotalCajas,\n                    Alto: txtAltoCaja.Value,\n                    Largo: txtLargoCaja.Value,\n                    Ancho: txtAnchoCaja.Value,\n                    Peso: txt_peso.Value,\n                    Guia: txtGuiaCaja.Text,\n                    Bulto: txtBultoCaja.Selected.Title,\n                    Fecha_Registro: Now(),\n                    // Cache the client name locally so you don't keep running LookUps\n                    Cliente: varEntradaActual.Nombre_Cliente \n                }\n            );\n            \n            // 3. Clear inputs for the next entry\n            Reset(dropdownCajaDetalle);\n            Reset(txtAltoCaja);\n            Reset(txt_peso);\n            Reset(txtLargoCaja);\n            Reset(txtAnchoCaja);\n            Reset(txtGuiaCaja);\n            Reset(txtBultoCaja);\n\n            Notify(\"Caja agregada a la lista\", NotificationType.Information)\n        )\n    )\n)"
+                  OnSelect: "=If(\n    IsBlank(dropdownCajaDetalle.Selected.Value) || dropdownCajaDetalle.Selected.Value = \"\",\n    Notify(\"Selecciona una caja.\", NotificationType.Error),\n    \n    If(\n        IsBlank(txtBultoCaja.Selected.Title),\n        Notify(\"Selecciona un tipo de bulto.\", NotificationType.Error),\n\n        // 1. Duplicate Check against LOCAL Collection\n        If(\n    !IsEmpty(\n        Filter(\n            colDetalleCajasStaging,\n            Numero_Entrada = varNumeroEntrada &&\n            Numero_Caja = Value(dropdownCajaDetalle.Selected.Value)\n        )\n    ) ||\n    !IsEmpty(\n        Filter(\n            WMS_Detalle_Cajas,\n            Numero_Entrada = varNumeroEntrada &&\n            Numero_Caja = Value(dropdownCajaDetalle.Selected.Value)\n        )\n    ),\n    Notify(\"Esta caja ya fue agregada a la lista temporal\", NotificationType.Error),\n\n            // 2. Safe to Stage Locally\n            Collect(\n                colDetalleCajasStaging,\n                {\n                    Numero_Entrada: varNumeroEntrada,\n                    Numero_Caja: Value(dropdownCajaDetalle.Selected.Value),\n                    Total_cajas: varTotalCajas,\n                    Alto: txtAltoCaja.Value,\n                    Largo: txtLargoCaja.Value,\n                    Ancho: txtAnchoCaja.Value,\n                    Peso: txt_peso.Value,\n                    Guia: txtGuiaCaja.Text,\n                    Bulto: txtBultoCaja.Selected.Title,\n                    Fecha_Registro: Now(),\n                    // Cache the client name locally so you don't keep running LookUps\n                    Cliente: varEntradaActual.Nombre_Cliente \n                }\n            );\n            \n            // 3. Clear inputs for the next entry\n            Reset(dropdownCajaDetalle);\n            Reset(txtAltoCaja);\n            Reset(txt_peso);\n            Reset(txtLargoCaja);\n            Reset(txtAnchoCaja);\n            Reset(txtGuiaCaja);\n            Reset(txtBultoCaja);\n\n            Notify(\"Caja agregada a la lista\", NotificationType.Information)\n        )\n    )\n)"
                   PressedBorderColor: =Self.Fill
                   PressedColor: =Self.Fill
                   PressedFill: =Self.Color
@@ -170,8 +170,16 @@ Screens:
                         Sequence(Value(varEntradaActual.Cantidad_bultos)) As _boxNumber,
                         IsBlank(
                             LookUp(
+                                WMS_Detalle_Cajas,
+                                Numero_Entrada = varEntradaActual.Numero_Entrada &&
+                                Numero_Caja = _boxNumber.Value
+                            )
+                        ) &&
+                        IsBlank(
+                            LookUp(
                                 colDetalleCajasStaging,
-                                Value(Numero_Caja) = _boxNumber.Value
+                                Numero_Entrada = varEntradaActual.Numero_Entrada &&
+                                Numero_Caja = _boxNumber.Value
                             )
                         )
                     )
@@ -466,8 +474,12 @@ Screens:
                     Set(varNumeroEntrada, Blank());
                     Set(varEntradaActual, Blank());
 
-                    //Navigate(Entradas, ScreenTransition.CoverRight)
-                    Back();
+                    // 7. Return to the screen that opened detalle de cajas
+                    If(
+                        varModoEditarDetalleEntrada,
+                        Navigate(Editar_Entradas, ScreenTransition.CoverRight),
+                        Navigate(scrEntradasPendientes, ScreenTransition.CoverRight)
+                    );
                   PressedBorderColor: =Self.Fill
                   PressedColor: =Self.Fill
                   PressedFill: =Self.Color
