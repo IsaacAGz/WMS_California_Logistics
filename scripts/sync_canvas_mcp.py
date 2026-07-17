@@ -8,7 +8,7 @@ from mcp.client.stdio import stdio_client
 ENV_ID = "Default-47c551c6-5fb2-480e-939a-c8e6c57d73ba"
 APP_ID = "9619f3e7-a136-42ed-8a99-d0463f8d6905"
 LOGIN_HINT = "revisor@californialg.onmicrosoft.com"
-TARGET_DIR = r"C:\Users\PC\Documents\Code\WMS_California_Logistics\wms-california-logistics"
+TARGET_DIR = r"C:\Users\PC\Documents\Code\WMS_California_Logistics\wms-california-logistics-v2"
 
 
 async def main() -> int:

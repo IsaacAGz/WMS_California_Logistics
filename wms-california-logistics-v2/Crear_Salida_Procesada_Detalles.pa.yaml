@@ -1,17 +1,17 @@
 Screens:
-  Crear_Salida_Pendiente_Detalles:
+  Crear_Salida_Procesada_Detalles:
     Properties:
       Fill: =varGlobal_Fill_Pantalla
       LoadingSpinnerColor: =RGBA(0, 120, 212, 1)
     Children:
-      - cabezera_23:
+      - cabezera_5:
           Control: GroupContainer
           Variant: ManualLayout
           Properties:
             Height: =80
             Width: =1366
           Children:
-            - fondo_23:
+            - fondo_5:
                 Control: Rectangle
                 Properties:
                   BorderColor: =RGBA(0, 18, 107, 1)
@@ -24,7 +24,7 @@ Screens:
                   HoverFill: =varGlobal_Color_Principal
                   PressedFill: =varGlobal_Color_Principal
                   Width: =1366
-            - icono_nueva_entrada_5:
+            - icono_nueva_entrada_4:
                 Control: Classic/Icon
                 Properties:
                   BorderColor: =RGBA(0, 0, 0, 0)
@@ -37,13 +37,13 @@ Screens:
                   HoverFill: =RGBA(0, 0, 0, 0)
                   Icon: =Icon.BackArrow
                   OnSelect: |-
-                    =Reset(buscador_entradas_10);
-                    Navigate(Crear_Salida_Procesada, ScreenTransition.CoverRight)
+                    =Reset(buscador_entradas_5);
+                    Navigate(Crear_Salida, ScreenTransition.CoverRight)
                   PressedFill: =RGBA(0, 0, 0, 0)
                   Width: =52
                   X: =96
                   Y: =14
-            - icono_home_25:
+            - icono_home_11:
                 Control: Classic/Icon
                 Properties:
                   BorderColor: =RGBA(0, 0, 0, 0)
@@ -56,7 +56,7 @@ Screens:
                   HoverFill: =RGBA(0, 0, 0, 0)
                   Icon: =Icon.Home
                   OnSelect: |-
-                    =Reset(buscador_entradas_10);
+                    =Reset(buscador_entradas_5);
                     Clear(ColectarEntradas);
                     Clear(ColectarBultos);
                     Reset(Gallery4);
@@ -65,7 +65,7 @@ Screens:
                   Width: =52
                   X: =15
                   Y: =14
-            - buscador_entradas_10:
+            - buscador_entradas_5:
                 Control: Classic/TextInput
                 Properties:
                   BorderColor: =RGBA(245, 245, 245, 1)
@@ -89,7 +89,7 @@ Screens:
                   Width: =367
                   X: =977
                   Y: =23
-            - titulo_pagina_23:
+            - titulo_pagina_5:
                 Control: Label
                 Properties:
                   BorderColor: =RGBA(0, 0, 0, 0)
@@ -106,7 +106,7 @@ Screens:
                   Width: =389
                   X: =250
                   Y: =15
-      - contenedor_galeria_entradas_4:
+      - contenedor_galeria_entradas_1:
           Control: GroupContainer
           Variant: ManualLayout
           Properties:
@@ -119,7 +119,7 @@ Screens:
             X: =28
             Y: =100
           Children:
-            - galeria_entradas_colecion_1:
+            - galeria_entradas_colecion:
                 Control: Gallery
                 Variant: BrowseLayout_Vertical_TwoTextOneImageVariant_ver5.0
                 Properties:
@@ -129,7 +129,7 @@ Screens:
                   Items: =ColectarEntradas
                   Width: =420
                 Children:
-                  - Image2_5:
+                  - Image2_3:
                       Control: Image
                       Properties:
                         BorderColor: =RGBA(0, 0, 0, 0)
@@ -157,7 +157,7 @@ Screens:
                         Width: =72
                         X: =16
                         Y: =(Parent.TemplateHeight / 2) - (Self.Height / 2)
-                  - Title2_6:
+                  - Title2_3:
                       Control: Label
                       Properties:
                         BorderColor: =RGBA(0, 0, 0, 1)
@@ -176,8 +176,8 @@ Screens:
                         VerticalAlign: =VerticalAlign.Top
                         Width: =Parent.TemplateWidth - 173
                         X: =103
-                        Y: =(Parent.TemplateHeight - (Self.Size * 1.8 + Subtitle2_8.Size * 1.8)) / 2
-                  - Subtitle2_8:
+                        Y: =(Parent.TemplateHeight - (Self.Size * 1.8 + Subtitle2_5.Size * 1.8)) / 2
+                  - Subtitle2_5:
                       Control: Label
                       Properties:
                         BorderColor: =RGBA(0, 0, 0, 1)
@@ -195,10 +195,10 @@ Screens:
                         Text: |-
                           ="Bultos: " & ThisItem.Cantidad_bultos
                         VerticalAlign: =VerticalAlign.Top
-                        Width: =Title2_6.Width
-                        X: =Title2_6.X
+                        Width: =Title2_3.Width
+                        X: =Title2_3.X
                         Y: =53
-                  - NextArrow1_6:
+                  - NextArrow1_3:
                       Control: Classic/Icon
                       Properties:
                         AccessibleLabel: =Self.Tooltip
@@ -222,7 +222,7 @@ Screens:
                         Width: =50
                         X: =Parent.TemplateWidth - Self.Width - 12
                         Y: =(Parent.TemplateHeight / 2) - (Self.Height / 2)
-                  - Separator2_6:
+                  - Separator2_3:
                       Control: Rectangle
                       Properties:
                         BorderColor: =RGBA(0, 0, 0, 0)
@@ -231,16 +231,16 @@ Screens:
                         OnSelect: =Select(Parent)
                         Width: =Parent.TemplateWidth
                         Y: =Parent.TemplateHeight - Self.Height
-                  - Rectangle3_6:
+                  - Rectangle3_3:
                       Control: Rectangle
                       Properties:
                         BorderColor: =RGBA(0, 0, 0, 0)
                         Fill: =varGlobal_Color_Principal
-                        Height: =Parent.TemplateHeight - Separator2_6.Height
+                        Height: =Parent.TemplateHeight - Separator2_3.Height
                         OnSelect: =Select(Parent)
                         Visible: =ThisItem.IsSelected
                         Width: =4
-      - contenedor_galeria_entradas_5:
+      - contenedor_galeria_entradas_2:
           Control: GroupContainer
           Variant: ManualLayout
           Properties:
@@ -253,7 +253,7 @@ Screens:
             X: =472
             Y: =100
           Children:
-            - galeria_bultos_coleccion_1:
+            - galeria_bultos_coleccion:
                 Control: Gallery
                 Variant: BrowseLayout_Vertical_TwoTextOneImageVariant_ver5.0
                 Properties:
@@ -263,12 +263,12 @@ Screens:
                   Items: |-
                     =Filter(
                         WMS_Detalle_Cajas, 
-                        Numero_Entrada = galeria_entradas_colecion_1.Selected.Numero_Entrada
+                        Numero_Entrada = galeria_entradas_colecion.Selected.Numero_Entrada
                     )
                   OnSelect: "=If(\r\n    IsBlank(\r\n        LookUp(\r\n            ColectarBultos, \r\n            Numero_Entrada = ThisItem.Numero_Entrada And Numero_Caja = ThisItem.Numero_Caja\r\n        )\r\n    ),\r\n    // Si no está en la lista final, lo agregamos individualmente\r\n    Collect(ColectarBultos, ThisItem),\r\n    \r\n    // Si ya está en la lista final, lo removemos de forma exacta\r\n    Remove(\r\n        ColectarBultos, \r\n        LookUp(\r\n            ColectarBultos, \r\n            Numero_Entrada = ThisItem.Numero_Entrada And Numero_Caja = ThisItem.Numero_Caja\r\n        )\r\n    )\r\n)"
                   Width: =420
                 Children:
-                  - Image2_6:
+                  - Image2_4:
                       Control: Image
                       Properties:
                         BorderColor: |-
@@ -315,7 +315,7 @@ Screens:
                         Width: =72
                         X: =16
                         Y: =(Parent.TemplateHeight / 2) - (Self.Height / 2)
-                  - Title2_7:
+                  - Title2_4:
                       Control: Label
                       Properties:
                         BorderColor: =RGBA(0, 0, 0, 1)
@@ -334,8 +334,8 @@ Screens:
                         VerticalAlign: =VerticalAlign.Top
                         Width: =Parent.TemplateWidth - 173
                         X: =103
-                        Y: =(Parent.TemplateHeight - (Self.Size * 1.8 + Subtitle2_9.Size * 1.8)) / 2
-                  - Subtitle2_9:
+                        Y: =(Parent.TemplateHeight - (Self.Size * 1.8 + Subtitle2_6.Size * 1.8)) / 2
+                  - Subtitle2_6:
                       Control: Label
                       Properties:
                         BorderColor: =RGBA(0, 0, 0, 1)
@@ -353,10 +353,10 @@ Screens:
                         Text: |-
                           ="Numero de Caja: " & ThisItem.Numero_Caja
                         VerticalAlign: =VerticalAlign.Top
-                        Width: =Title2_7.Width
-                        X: =Title2_7.X
+                        Width: =Title2_4.Width
+                        X: =Title2_4.X
                         Y: =53
-                  - NextArrow1_7:
+                  - NextArrow1_4:
                       Control: Classic/Icon
                       Properties:
                         AccessibleLabel: =Self.Tooltip
@@ -375,7 +375,7 @@ Screens:
                         Width: =50
                         X: =Parent.TemplateWidth - Self.Width - 12
                         Y: =(Parent.TemplateHeight / 2) - (Self.Height / 2)
-                  - Separator2_7:
+                  - Separator2_4:
                       Control: Rectangle
                       Properties:
                         BorderColor: =RGBA(0, 0, 0, 0)
@@ -384,16 +384,16 @@ Screens:
                         OnSelect: =Select(Parent)
                         Width: =Parent.TemplateWidth
                         Y: =Parent.TemplateHeight - Self.Height
-                  - Rectangle3_7:
+                  - Rectangle3_4:
                       Control: Rectangle
                       Properties:
                         BorderColor: =RGBA(0, 0, 0, 0)
                         Fill: =varGlobal_Color_Principal
-                        Height: =Parent.TemplateHeight - Separator2_7.Height
+                        Height: =Parent.TemplateHeight - Separator2_4.Height
                         OnSelect: =Select(Parent)
                         Visible: =ThisItem.IsSelected
                         Width: =4
-      - contenedor_galeria_entradas_6:
+      - contenedor_galeria_entradas_3:
           Control: GroupContainer
           Variant: ManualLayout
           Properties:
@@ -406,7 +406,7 @@ Screens:
             X: =916
             Y: =100
           Children:
-            - galeria_entradas_4:
+            - galeria_entradas_3:
                 Control: Gallery
                 Variant: BrowseLayout_Vertical_TwoTextOneImageVariant_ver5.0
                 Properties:
@@ -418,7 +418,7 @@ Screens:
                   TemplateSize: =74
                   Width: =418
                 Children:
-                  - Title2_8:
+                  - Title2_5:
                       Control: Label
                       Properties:
                         BorderColor: =RGBA(0, 0, 0, 1)
@@ -437,8 +437,8 @@ Screens:
                         VerticalAlign: =VerticalAlign.Top
                         Width: =Parent.TemplateWidth - 173
                         X: =23
-                        Y: =(Parent.TemplateHeight - (Self.Size * 1.8 + Subtitle2_10.Size * 1.8)) / 2
-                  - Subtitle2_10:
+                        Y: =(Parent.TemplateHeight - (Self.Size * 1.8 + Subtitle2_7.Size * 1.8)) / 2
+                  - Subtitle2_7:
                       Control: Label
                       Properties:
                         BorderColor: =RGBA(0, 0, 0, 1)
@@ -456,10 +456,10 @@ Screens:
                         Text: |-
                           ="Numero de Caja: " & ThisItem.Numero_Caja
                         VerticalAlign: =VerticalAlign.Top
-                        Width: =Title2_8.Width
-                        X: =Title2_8.X
+                        Width: =Title2_5.Width
+                        X: =Title2_5.X
                         Y: =38
-                  - NextArrow1_8:
+                  - NextArrow1_5:
                       Control: Classic/Icon
                       Properties:
                         AccessibleLabel: =Self.Tooltip
@@ -485,7 +485,7 @@ Screens:
                         Width: =50
                         X: =Parent.TemplateWidth - Self.Width - 12
                         Y: =(Parent.TemplateHeight / 2) - (Self.Height / 2)
-                  - Separator2_8:
+                  - Separator2_5:
                       Control: Rectangle
                       Properties:
                         BorderColor: =RGBA(0, 0, 0, 0)
@@ -494,16 +494,16 @@ Screens:
                         OnSelect: =Select(Parent)
                         Width: =Parent.TemplateWidth
                         Y: =Parent.TemplateHeight - Self.Height
-                  - Rectangle3_8:
+                  - Rectangle3_5:
                       Control: Rectangle
                       Properties:
                         BorderColor: =RGBA(0, 0, 0, 0)
                         Fill: =varGlobal_Color_Principal
-                        Height: =Parent.TemplateHeight - Separator2_8.Height
+                        Height: =Parent.TemplateHeight - Separator2_5.Height
                         OnSelect: =Select(Parent)
                         Visible: =ThisItem.IsSelected
                         Width: =4
-            - Label5_1:
+            - Label5:
                 Control: Label
                 Properties:
                   BorderColor: =RGBA(0, 0, 0, 0)
@@ -520,7 +520,7 @@ Screens:
                   Width: =215
                   X: =20
                   Y: =468
-      - boton_confirmar_salida_1:
+      - boton_confirmar_salida:
           Control: Classic/Button
           Properties:
             BorderColor: =ColorFade(Self.Fill, -15%)
@@ -532,7 +532,7 @@ Screens:
             HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
             HoverColor: =RGBA(255, 255, 255, 1)
             HoverFill: =ColorFade(Self.Fill, -20%)
-            OnSelect: "=If(\n    IsEmpty(ColectarBultos),\n    // Validation Failure: Warn the user and halt execution\n    Notify(\"Error: No se han seleccionado bultos para procesar la salida.\", NotificationType.Error),\n    \n    // Validation Success: Generate IDs and open the confirmation pop-up\n    UpdateContext({\n        varMostrarConfirmacionPopup: true,\n        varNuevoNumSalida: \"SAL-\" & Text(Today(), \"mmddyy\") & \"-\" & Text(varSalidaActual.ID, \"0000\")\n    })\n)"
+            OnSelect: "=If(\n    IsEmpty(ColectarBultos),\n    Notify(\"Error: No se han seleccionado bultos para procesar la salida.\", NotificationType.Error),\n    \n    UpdateContext({\n        varMostrarConfirmacionPopup: true,\n        // Using an absolute timestamp marker (MinuteSecond) ensures uniqueness before the DB generates the actual record ID\n        varNuevoNumSalida: \"SAL-\" & Text(Now(), \"mmddyy-hhmmss\")\n    })\n)"
             PressedBorderColor: =Self.Fill
             PressedColor: =Self.Fill
             PressedFill: =Self.Color
@@ -544,7 +544,7 @@ Screens:
             Width: =320
             X: =966
             Y: =657
-      - confirmar_salida_detalles_3:
+      - confirmar_salida_detalles_2:
           Control: GroupContainer
           Variant: ManualLayout
           Properties:
@@ -561,7 +561,7 @@ Screens:
             X: =359
             Y: =320
           Children:
-            - lblPreguntaDetalleCajas_7:
+            - lblPreguntaDetalleCajas_4:
                 Control: Label
                 Properties:
                   Align: =Align.Center
@@ -581,7 +581,7 @@ Screens:
                   Width: =527
                   X: =66
                   Y: =11
-            - btnSiAgregarDetalle_7:
+            - btnSiAgregarDetalle_4:
                 Control: Classic/Button
                 Properties:
                   BorderColor: =ColorFade(Self.Fill, -15%)
@@ -593,7 +593,7 @@ Screens:
                   HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
                   HoverColor: =RGBA(255, 255, 255, 1)
                   HoverFill: =ColorFade(Self.Fill, -20%)
-                  OnSelect: "=// 1. Create the enriched master record in SharePoint\n\nSet(\n\n    varSalidaActual,\n\n    Patch(\n\n        WMS_Ordenes_Salidas,\n\n        Defaults(WMS_Ordenes_Salidas),\n\n        {\n\n            Numero_Salida: varNuevoNumSalida,\n\n            Numero_Entradas: Concat(Distinct(ColectarBultos, Numero_Entrada), Value, \", \"),\n\n            Guia: Concat(Distinct(ColectarBultos, Guia), Value, \", \"),\n\n            Clientes: Concat(Distinct(ColectarBultos, Cliente), Value, \", \"),\n\n            Cantidad_Bultos: CountRows(ColectarBultos),\n\n            Observaciones: \"\", // Assumes an input control name; adjust if necessary\n\n            Fecha_Salida_Creada: Now(),\n\n            Fecha_Salida_Pronosticada: Now(), // Assumes a date picker control; adjust if necessary\n\n            Estado: \"Procesada\",\n\n            Fecha_Salida_Procesada: Now()\n\n            // Note: Foto can be attached here or handled via form/attachments depending on your data schema\n\n        }\n\n    )\n\n);\n\n\n// 2. Insert rows into the child details table (WMS_Salida_Detalles) from ColectarBultos\n\nForAll(\n\n    ColectarBultos As _bulto,\n\n    Patch(\n\n        WMS_Salidas_Detalles,\n\n        Defaults(WMS_Salidas_Detalles),\n\n        {\n\n            Numero_Salida: varNuevoNumSalida,\n\n            Numero_Bulto: _bulto.Numero_Caja, // Assumes collection uses Numero_Caja or mapping equivalent\n\n            Numero_Entrada: _bulto.Numero_Entrada\n\n            // Foto: _bulto.Foto // Pass structural photo binary reference if retained in staging collection\n\n        }\n\n    )\n\n);\n\n\n// 3. Loop through and execute inventory source cleanups (Removals & Updates)\n\nForAll(\n\n    ColectarEntradas As _entrada,\n\n   \n\n    With(\n\n        {\n\n            TotalEnSource: CountRows(Filter(WMS_Detalle_Cajas, Numero_Entrada = _entrada.Numero_Entrada)),\n\n            Seleccionados: CountRows(Filter(ColectarBultos, Numero_Entrada = _entrada.Numero_Entrada)),\n\n            TargetEntradaRecord: LookUp(WMS_Ordenes_Entrantes, Numero_Entrada = _entrada.Numero_Entrada)\n\n        },\n\n       \n\n        // --- SCENARIO A: ALL BULTOS SELECTED ---\n\n        If(\n\n            TotalEnSource = Seleccionados,\n\n            Remove(WMS_Ordenes_Entrantes, TargetEntradaRecord)\n\n        );\n\n        If(\n\n            TotalEnSource = Seleccionados,\n\n            RemoveIf(WMS_Detalle_Cajas, Numero_Entrada = _entrada.Numero_Entrada)\n\n        );\n\n       \n\n        // --- SCENARIO B: PARTIAL BULTOS SELECTED ---\n\n        If(\n\n            TotalEnSource <> Seleccionados,\n\n            RemoveIf(\n\n                WMS_Detalle_Cajas,\n\n                Numero_Entrada = _entrada.Numero_Entrada And\n\n                !IsBlank(\n\n                    LookUp(\n\n                        Filter(ColectarBultos, Numero_Entrada = _entrada.Numero_Entrada),\n\n                        Numero_Caja = WMS_Detalle_Cajas[@Numero_Caja]\n\n                    )\n\n                )\n\n            )\n\n        );\n\n        If(\n\n            TotalEnSource <> Seleccionados,\n\n            Patch(\n\n                WMS_Ordenes_Entrantes,\n\n                TargetEntradaRecord,\n\n                {\n\n                    Cantidad_bultos: TotalEnSource - Seleccionados\n\n                }\n\n            )\n\n        )\n\n    )\n\n);\n\n\n// 4. Clear the staging collection tables\n\nClear(ColectarBultos);\n\nClear(ColectarEntradas);\n\n\n// 5. Close the pop-up modal interface\n\nUpdateContext({varMostrarConfirmacionPopup: false});\n\n\n// 6. Provide feedback and redirect the user\n\nNotify(\"Salida \" & varNuevoNumSalida & \" creada exitosamente\", NotificationType.Success);\n\nNavigate(Salidas_Procesadas, ScreenTransition.Cover) "
+                  OnSelect: "=// =========================================================================\n// 1. Capture Form2's Current State Safely\n// =========================================================================\nUpdateContext({\n    varFormDatosSalida: {\n        // Renamed to match downstream use and strictly outputting Text\n        Proveedor: Coalesce(\n            ddProveedorForm.Selected.Title, \n            Concat(Distinct(ColectarEntradas, Nombre_Proveedor), Value, \", \")\n        ),\n        Observaciones: txtObservacionesForm.Text,\n        Estado: ddEstadoForm.Selected.Value,\n        Fecha_Salida_Pronosticada: If(\n            ddEstadoForm.Selected.Value = \"Pendiente\", \n            dpFechaPronosticadaField.SelectedDate, \n            Blank()\n        )\n    }\n});\n\n// =========================================================================\n// 2. Create the Enriched Master Record in WMS_Ordenes_Salidas\n// =========================================================================\nSet(\n    varSalidaActual,\n    Patch(\n        WMS_Ordenes_Salidas,\n        Defaults(WMS_Ordenes_Salidas),\n        {\n            Numero_Salida: varNuevoNumSalida,\n            Numero_Entradas: Concat(Distinct(ColectarBultos, Numero_Entrada), Value, \", \"),\n            Guia: Concat(Distinct(ColectarBultos, Guia), Value, \", \"),\n            Clientes: Concat(Distinct(ColectarBultos, Cliente), Value, \", \"),\n            Cantidad_Bultos: CountRows(ColectarBultos),\n            \n            // FIXED: Directly referencing the text string property from the variable\n            Proveedor: varFormDatosSalida.Proveedor,\n            Observaciones: varFormDatosSalida.Observaciones,\n            Estado: varFormDatosSalida.Estado,\n            Fecha_Salida_Pronosticada: varFormDatosSalida.Fecha_Salida_Pronosticada,\n\n            Fecha_Salida_Creada: Now(),\n            Fecha_Salida_Procesada: If(varFormDatosSalida.Estado = \"Procesada\", Now(), Blank())\n        }\n    )\n);\n\n// =========================================================================\n// 3. High-Performance Bulk Patch for Child Details (WMS_Salidas_Detalles)\n// =========================================================================\nPatch(\n    WMS_Salidas_Detalles,\n    ForAll(\n        ColectarBultos As _bulto,\n        {\n            Numero_Salida: varNuevoNumSalida,\n            Numero_Bulto: _bulto.Numero_Caja, \n            Numero_Entrada: _bulto.Numero_Entrada\n        }\n    )\n);\n\n// =========================================================================\n// 4. Clean up Inventory Sources (Deletions & Updates)\n// =========================================================================\nForAll(\n    ColectarEntradas As _entrada,\n    With(\n        {\n            TotalEnSource: CountRows(Filter(WMS_Detalle_Cajas, Numero_Entrada = _entrada.Numero_Entrada)),\n            Seleccionados: CountRows(Filter(ColectarBultos, Numero_Entrada = _entrada.Numero_Entrada)),\n            TargetEntradaRecord: LookUp(WMS_Ordenes_Entrantes, Numero_Entrada = _entrada.Numero_Entrada)\n        },\n        \n        // --- SCENARIO A: ALL BULTOS SELECTED ---\n        If(\n            TotalEnSource = Seleccionados,\n            Remove(WMS_Ordenes_Entrantes, TargetEntradaRecord);\n            RemoveIf(WMS_Detalle_Cajas, Numero_Entrada = _entrada.Numero_Entrada)\n        );\n        \n        // --- SCENARIO B: PARTIAL BULTOS SELECTED ---\n        If(\n            TotalEnSource <> Seleccionados,\n            RemoveIf(\n                WMS_Detalle_Cajas,\n                Numero_Entrada = _entrada.Numero_Entrada And\n                !IsBlank(\n                    LookUp(\n                        ColectarBultos,\n                        Numero_Caja = WMS_Detalle_Cajas[@Numero_Caja] And Numero_Entrada = _entrada.Numero_Entrada\n                    )\n                )\n            );\n            Patch(\n                WMS_Ordenes_Entrantes,\n                TargetEntradaRecord,\n                {\n                    Cantidad_bultos: TotalEnSource - Seleccionados\n                }\n            )\n        )\n    )\n);\n\n// =========================================================================\n// 5. Clean up Workspace State & Navigate\n// =========================================================================\nResetForm(Form2);\n\nClear(ColectarBultos);\nClear(ColectarEntradas);\n\nUpdateContext({varMostrarConfirmacionPopup: false});\n\nNotify(\"Salida \" & varNuevoNumSalida & \" creada exitosamente\", NotificationType.Success);\nNavigate(Salidas_Procesadas, ScreenTransition.Cover)"
                   PressedBorderColor: =Self.Fill
                   PressedColor: =Self.Fill
                   PressedFill: =Self.Color
@@ -606,7 +606,7 @@ Screens:
                   Width: =190
                   X: =391
                   Y: =108
-            - btnNoDetalleDespues_7:
+            - btnNoDetalleDespues_4:
                 Control: Classic/Button
                 Properties:
                   BorderColor: =ColorFade(Self.Fill, -15%)

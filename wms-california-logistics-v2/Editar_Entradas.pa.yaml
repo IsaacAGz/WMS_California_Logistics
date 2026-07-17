@@ -45,7 +45,7 @@ Screens:
                   FontWeight: =FontWeight.Bold
                   Height: =32
                   Size: =12
-                  Text: ="Editar Entrada"
+                  Text: ="Editar Salida"
                   Width: =300
                   X: =24
                   Y: =12
@@ -239,11 +239,11 @@ Screens:
                 Variant: BrowseLayout_Horizontal_TwoTextOneImageVariant_ver5.0
                 Properties:
                   BorderColor: =varGlobal_Color_Principal
-                  Height: =289
+                  Height: =305
                   Items: =colDetalleCajasStaging
                   Selectable: =false
                   Width: =1320
-                  Y: =56
+                  Y: =40
                 Children:
                   - Image4:
                       Control: Image
@@ -293,8 +293,8 @@ Screens:
                           ="Guia: " & ThisItem.Guia
                         VerticalAlign: =VerticalAlign.Top
                         Width: =Parent.TemplateWidth - 64
-                        X: =32
-                        Y: =Image4.Y + Image4.Height + 16
+                        X: =26
+                        Y: =204
                   - Title4_1:
                       Control: Label
                       Properties:
@@ -314,8 +314,8 @@ Screens:
                           ="Bulto: " & ThisItem.Numero_Caja
                         VerticalAlign: =VerticalAlign.Top
                         Width: =Parent.TemplateWidth - 64
-                        X: =30
-                        Y: =245
+                        X: =26
+                        Y: =229
                   - Title4_2:
                       Control: Label
                       Properties:
@@ -331,11 +331,12 @@ Screens:
                         PaddingRight: =0
                         PaddingTop: =0
                         Size: =14
-                        Text: =ThisItem.Guia
+                        Text: |-
+                          ="Peso: " & ThisItem.Peso
                         VerticalAlign: =VerticalAlign.Top
                         Width: =Parent.TemplateWidth - 64
-                        X: =32
-                        Y: =282
+                        X: =26
+                        Y: =254
                   - Title4_3:
                       Control: Label
                       Properties:
@@ -700,125 +701,3 @@ Screens:
                   Width: =190
                   X: =77
                   Y: =138
-            - conPopupDetalleCajas_2:
-                Control: GroupContainer
-                Variant: ManualLayout
-                Properties:
-                  BorderColor: =varGlobal_Color_Principal
-                  BorderThickness: =3
-                  Fill: =Color.White
-                  Height: =194
-                  RadiusBottomLeft: =20
-                  RadiusBottomRight: =20
-                  RadiusTopLeft: =20
-                  RadiusTopRight: =20
-                  Visible: =varMostrarPopupDetalle
-                  Width: =646
-                Children:
-                  - lblPreguntaDetalleCajas_6:
-                      Control: Label
-                      Properties:
-                        BorderColor: =RGBA(0, 0, 0, 0)
-                        BorderStyle: =BorderStyle.None
-                        BorderThickness: =2
-                        Color: =RGBA(50, 49, 48, 1)
-                        DisabledBorderColor: =RGBA(0, 0, 0, 0)
-                        DisabledColor: =RGBA(161, 159, 157, 1)
-                        FocusedBorderThickness: =4
-                        Font: =Font.'Segoe UI'
-                        FontWeight: =FontWeight.Bold
-                        Height: =75
-                        Text: ="Deseas agregar detalle de cajas ahora?"
-                        Width: =345
-                        X: =133
-                        Y: =7
-                  - lblNumeroEntradaPopup_2:
-                      Control: Label
-                      Properties:
-                        Align: =Align.Center
-                        BorderColor: =RGBA(0, 0, 0, 0)
-                        BorderStyle: =BorderStyle.None
-                        BorderThickness: =2
-                        Color: =RGBA(50, 49, 48, 1)
-                        DisabledBorderColor: =RGBA(0, 0, 0, 0)
-                        DisabledColor: =RGBA(161, 159, 157, 1)
-                        FocusedBorderThickness: =4
-                        Font: =Font.'Segoe UI'
-                        FontWeight: =FontWeight.Bold
-                        Height: =52
-                        Text: |-
-                          ="Entrada creada: " & varNumeroEntrada
-                        Width: =185
-                        X: =213
-                        Y: =71
-                  - btnSiAgregarDetalle_6:
-                      Control: Classic/Button
-                      Properties:
-                        BorderColor: =ColorFade(Self.Fill, -15%)
-                        Color: =RGBA(255, 255, 255, 1)
-                        DisabledBorderColor: =RGBA(166, 166, 166, 1)
-                        Fill: =varGlobal_Color_Principal
-                        Font: =varGlobal_Fuente_Principal
-                        Height: =42
-                        HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
-                        HoverColor: =RGBA(255, 255, 255, 1)
-                        HoverFill: =ColorFade(Self.Fill, -20%)
-                        OnSelect: |
-                          =UpdateContext({varMostrarPopupDetalle: false});
-                          Set(varModoEditarDetalleEntrada, false);
-                          Set(varTotalCajas, varEntradaCreada.Cantidad_bultos);
-                          Patch(WMS_Ordenes_Entrantes, varEntradaCreada, {Estado_Detalle: "En captura"});
-
-                          Reset(cmbGuia);
-                          Reset(cmbObservaciones);
-                          Reset(cmbNombreCliente);
-                          Reset(txtTotalBultos);
-                          Reset(cmbNombreProveedor);
-
-                          Navigate(scrDetalleCajasEntrada);
-                        PressedBorderColor: =Self.Fill
-                        PressedColor: =Self.Fill
-                        PressedFill: =Self.Color
-                        RadiusBottomLeft: =20
-                        RadiusBottomRight: =20
-                        RadiusTopLeft: =20
-                        RadiusTopRight: =20
-                        Size: =10
-                        Text: ="Si, agregar detalle"
-                        Width: =190
-                        X: =403
-                        Y: =138
-                  - btnNoDetalleDespues_6:
-                      Control: Classic/Button
-                      Properties:
-                        BorderColor: =ColorFade(Self.Fill, -15%)
-                        Color: =RGBA(255, 255, 255, 1)
-                        DisabledBorderColor: =RGBA(166, 166, 166, 1)
-                        Fill: =RGBA(9, 123, 63, 0.33)
-                        Font: =varGlobal_Fuente_Principal
-                        Height: =42
-                        HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
-                        HoverColor: =RGBA(255, 255, 255, 1)
-                        HoverFill: =ColorFade(Self.Fill, -20%)
-                        OnSelect: |-
-                          =UpdateContext({varMostrarPopupDetalle: false});
-
-                          Reset(cmbGuia);
-                          Reset(cmbObservaciones);
-                          Reset(cmbNombreCliente);
-                          Reset(txtTotalBultos);
-                          Reset(cmbNombreProveedor);
-
-                          Notify("La entrada quedó pendiente de detalle: " & varNumeroEntrada, NotificationType.Information)
-                        PressedBorderColor: =Self.Fill
-                        PressedColor: =Self.Fill
-                        PressedFill: =Self.Color
-                        RadiusBottomLeft: =20
-                        RadiusBottomRight: =20
-                        RadiusTopLeft: =20
-                        RadiusTopRight: =20
-                        Size: =10
-                        Text: ="No, registrar mas tarde"
-                        Width: =190
-                        X: =77
-                        Y: =138

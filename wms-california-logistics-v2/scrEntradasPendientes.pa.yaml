@@ -166,7 +166,7 @@ Screens:
                         PaddingRight: =0
                         PaddingTop: =0
                         Size: =14
-                        Text: =ThisItem.Nombre
+                        Text: =ThisItem.Numero_Entrada
                         VerticalAlign: =VerticalAlign.Top
                         Width: =Parent.TemplateWidth - 173
                         X: =86

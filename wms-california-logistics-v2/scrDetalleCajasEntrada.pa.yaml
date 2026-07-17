@@ -113,21 +113,21 @@ Screens:
                 Properties:
                   Precision: =DecimalPrecision.'2'
                   Width: =127
-                  X: =563
+                  X: =385
                   Y: =61
             - txtLargoCaja:
                 Control: ModernNumberInput
                 Properties:
                   Precision: =DecimalPrecision.'2'
                   Width: =127
-                  X: =711
+                  X: =533
                   Y: =64
             - txtAnchoCaja:
                 Control: ModernNumberInput
                 Properties:
                   Precision: =DecimalPrecision.'2'
                   Width: =127
-                  X: =860
+                  X: =682
                   Y: =64
             - txtGuiaCaja:
                 Control: ModernTextInput
@@ -135,7 +135,7 @@ Screens:
                   Placeholder: ="Guia"
                   Width: =250
                   X: =1004
-                  Y: =61
+                  Y: =64
             - btnGuardarCaja:
                 Control: Classic/Button
                 Properties:
@@ -149,7 +149,7 @@ Screens:
                   HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
                   HoverColor: =RGBA(255, 255, 255, 1)
                   HoverFill: =ColorFade(Self.Fill, -20%)
-                  OnSelect: "=If(\n    IsBlank(dropdownCajaDetalle.Selected.Value) || dropdownCajaDetalle.Selected.Value = \"\",\n    Notify(\"Selecciona una caja.\", NotificationType.Error),\n    \n    If(\n        IsBlank(txtBultoCaja.Selected.Title),\n        Notify(\"Selecciona un tipo de bulto.\", NotificationType.Error),\n\n        // 1. Duplicate Check against LOCAL Collection\n        If(\n            !IsEmpty(\n                Filter(\n                    colDetalleCajasStaging,\n                    Numero_Entrada = varNumeroEntrada &&\n                    Numero_Caja = Value(dropdownCajaDetalle.Selected.Value)\n                )\n            ),\n            Notify(\"Esta caja ya fue agregada a la lista temporal\", NotificationType.Error),\n\n            // 2. Safe to Stage Locally\n            Collect(\n                colDetalleCajasStaging,\n                {\n                    Numero_Entrada: varNumeroEntrada,\n                    Numero_Caja: Value(dropdownCajaDetalle.Selected.Value),\n                    Total_cajas: varTotalCajas,\n                    Alto: txtAltoCaja.Value,\n                    Largo: txtLargoCaja.Value,\n                    Ancho: txtAnchoCaja.Value,\n                    Guia: txtGuiaCaja.Text,\n                    Bulto: txtBultoCaja.Selected.Title,\n                    Fecha_Registro: Now(),\n                    // Cache the client name locally so you don't keep running LookUps\n                    Cliente: varEntradaActual.Nombre_Cliente \n                }\n            );\n            \n            // 3. Clear inputs for the next entry\n            Reset(dropdownCajaDetalle);\n            Reset(txtAltoCaja);\n            Reset(txtLargoCaja);\n            Reset(txtAnchoCaja);\n            Reset(txtGuiaCaja);\n            Reset(txtBultoCaja);\n\n            Notify(\"Caja agregada a la lista\", NotificationType.Information)\n        )\n    )\n)"
+                  OnSelect: "=If(\n    IsBlank(dropdownCajaDetalle.Selected.Value) || dropdownCajaDetalle.Selected.Value = \"\",\n    Notify(\"Selecciona una caja.\", NotificationType.Error),\n    \n    If(\n        IsBlank(txtBultoCaja.Selected.Title),\n        Notify(\"Selecciona un tipo de bulto.\", NotificationType.Error),\n\n        // 1. Duplicate Check against LOCAL Collection\n        If(\n            !IsEmpty(\n                Filter(\n                    colDetalleCajasStaging,\n                    Numero_Entrada = varNumeroEntrada &&\n                    Numero_Caja = Value(dropdownCajaDetalle.Selected.Value)\n                )\n            ),\n            Notify(\"Esta caja ya fue agregada a la lista temporal\", NotificationType.Error),\n\n            // 2. Safe to Stage Locally\n            Collect(\n                colDetalleCajasStaging,\n                {\n                    Numero_Entrada: varNumeroEntrada,\n                    Numero_Caja: Value(dropdownCajaDetalle.Selected.Value),\n                    Total_cajas: varTotalCajas,\n                    Alto: txtAltoCaja.Value,\n                    Largo: txtLargoCaja.Value,\n                    Ancho: txtAnchoCaja.Value,\n                    Peso: txt_peso.Value,\n                    Guia: txtGuiaCaja.Text,\n                    Bulto: txtBultoCaja.Selected.Title,\n                    Fecha_Registro: Now(),\n                    // Cache the client name locally so you don't keep running LookUps\n                    Cliente: varEntradaActual.Nombre_Cliente \n                }\n            );\n            \n            // 3. Clear inputs for the next entry\n            Reset(dropdownCajaDetalle);\n            Reset(txtAltoCaja);\n            Reset(txt_peso);\n            Reset(txtLargoCaja);\n            Reset(txtAnchoCaja);\n            Reset(txtGuiaCaja);\n            Reset(txtBultoCaja);\n\n            Notify(\"Caja agregada a la lista\", NotificationType.Information)\n        )\n    )\n)"
                   PressedBorderColor: =Self.Fill
                   PressedColor: =Self.Fill
                   PressedFill: =Self.Color
@@ -164,20 +164,19 @@ Screens:
             - dropdownCajaDetalle:
                 Control: ModernDropdown
                 Properties:
-                  Height: =31
                   ItemDisplayText: =ThisItem.Value
                   Items: |-
                     =Filter(
-                        Sequence(varEntradaActual.Cantidad_bultos),
+                        Sequence(Value(varEntradaActual.Cantidad_bultos)) As _boxNumber,
                         IsBlank(
                             LookUp(
                                 colDetalleCajasStaging,
-                                Numero_Caja = Value
+                                Value(Numero_Caja) = _boxNumber.Value
                             )
                         )
                     )
                   Visible: =varTotalCajas
-                  Width: =249
+                  Width: =141
                   X: =49
                   Y: =61
             - Label11:
@@ -256,7 +255,7 @@ Screens:
                   Height: =28
                   Text: ="Alto"
                   Width: =127
-                  X: =563
+                  X: =385
                   Y: =33
             - Label2_2:
                 Control: Label
@@ -273,7 +272,7 @@ Screens:
                   Height: =28
                   Text: ="Largo"
                   Width: =127
-                  X: =711
+                  X: =533
                   Y: =33
             - Label2_3:
                 Control: Label
@@ -290,7 +289,7 @@ Screens:
                   Height: =28
                   Text: ="Ancho"
                   Width: =127
-                  X: =860
+                  X: =682
                   Y: =33
             - Label2_4:
                 Control: Label
@@ -323,17 +322,42 @@ Screens:
                   FontWeight: =FontWeight.Bold
                   Height: =28
                   Text: ="Tipo de Bulto"
-                  Width: =127
-                  X: =310
-                  Y: =33
+                  Width: =114
+                  X: =205
+                  Y: =32
             - txtBultoCaja:
                 Control: ModernDropdown
                 Properties:
+                  Height: =33
                   ItemDisplayText: =ThisItem.'Title'
                   Items: =WMS_Catalogo_Bultos
-                  Width: =240
-                  X: =310
-                  Y: =61
+                  Width: =162
+                  X: =205
+                  Y: =60
+            - txt_peso:
+                Control: ModernNumberInput
+                Properties:
+                  Precision: =DecimalPrecision.'2'
+                  Width: =127
+                  X: =843
+                  Y: =64
+            - Label2_6:
+                Control: Label
+                Properties:
+                  BorderColor: =RGBA(0, 0, 0, 0)
+                  BorderStyle: =BorderStyle.None
+                  BorderThickness: =2
+                  Color: =RGBA(50, 49, 48, 1)
+                  DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                  DisabledColor: =RGBA(161, 159, 157, 1)
+                  FocusedBorderThickness: =4
+                  Font: =Font.Lato
+                  FontWeight: =FontWeight.Bold
+                  Height: =28
+                  Text: ="Peso"
+                  Width: =127
+                  X: =843
+                  Y: =33
       - ver_detalles_agregados_conenedor:
           Control: GroupContainer
           Variant: ManualLayout
@@ -361,7 +385,7 @@ Screens:
                   HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
                   HoverColor: =RGBA(255, 255, 255, 1)
                   HoverFill: =ColorFade(Self.Fill, -20%)
-                  OnSelect: |
+                  OnSelect: |-
                     =// 1. Delete any removed boxes from the live data source using their IDs
                     If(
                         CountRows(colCajasBorradas) > 0,
@@ -371,8 +395,8 @@ Screens:
                         );
                         Clear(colCajasBorradas)
                     );
+
                     // 2.A Bulk CREATE (New boxes with ID = 0 or blank)
-                    // We use Coalesce to guarantee a number is sent to SharePoint, preventing null-pointer database errors.
                     Patch(
                         WMS_Detalle_Cajas,
                         ForAll(
@@ -384,6 +408,7 @@ Screens:
                                 Alto: Coalesce(Value(_newCaja.Alto), 0),
                                 Largo: Coalesce(Value(_newCaja.Largo), 0),
                                 Ancho: Coalesce(Value(_newCaja.Ancho), 0),
+                                Peso: Coalesce(Value(_newCaja.Peso), 0), 
                                 Guia: Coalesce(_newCaja.Guia, ""),
                                 Bulto: Coalesce(_newCaja.Bulto, ""),
                                 Fecha_Registro: Today(),
@@ -405,6 +430,7 @@ Screens:
                                 Alto: Coalesce(Value(_oldCaja.Alto), 0),
                                 Largo: Coalesce(Value(_oldCaja.Largo), 0),
                                 Ancho: Coalesce(Value(_oldCaja.Ancho), 0),
+                                Peso: Coalesce(Value(_oldCaja.Peso), 0), 
                                 Guia: Coalesce(_oldCaja.Guia, ""),
                                 Bulto: Coalesce(_oldCaja.Bulto, ""),
                                 Fecha_Registro: Today(),
@@ -440,7 +466,8 @@ Screens:
                     Set(varNumeroEntrada, Blank());
                     Set(varEntradaActual, Blank());
 
-                    Navigate(Entradas, ScreenTransition.CoverRight)
+                    //Navigate(Entradas, ScreenTransition.CoverRight)
+                    Back();
                   PressedBorderColor: =Self.Fill
                   PressedColor: =Self.Fill
                   PressedFill: =Self.Color

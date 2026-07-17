@@ -65,7 +65,7 @@ Screens:
                   DefaultSelectedItems: |-
                     =Filter(
                         WMS_Catalogo_Proveedor,
-                        Nombre = varSalidaEditar.Proovedor
+                        Title = varSalidaEditar.Proovedor
                     )
                   FontWeight: =FontWeight.Bold
                   InputTextPlaceholder: ="Seleccionar Proveedor"
@@ -172,9 +172,11 @@ Screens:
             - Dropdown1:
                 Control: ModernDropdown
                 Properties:
-                  Default: =varSalidaEditar.Estado
+                  Default: =varSalidaEditar.Paquetera
+                  Height: =28
                   ItemDisplayText: =false
-                  Items: =["Procesado", "Pendiente"]
+                  Items: =WMS_Ordenes_Salidas
+                  Width: =300
                   X: =24
                   Y: =131
       - Contenedor_Detalle_Entrada_Cajas_1:
@@ -284,8 +286,8 @@ Screens:
                           ="Bulto: " & ThisItem.Numero_Bulto
                         VerticalAlign: =VerticalAlign.Top
                         Width: =Parent.TemplateWidth - 64
-                        X: =30
-                        Y: =245
+                        X: =32
+                        Y: =237
                   - Title4_6:
                       Control: Label
                       Properties:
@@ -347,7 +349,7 @@ Screens:
                         VerticalAlign: =VerticalAlign.Top
                         Width: =Parent.TemplateWidth - 64
                         X: =32
-                        Y: =270
+                        Y: =262
             - btnGestionarDetalleCajas_1:
                 Control: Classic/Button
                 Properties:

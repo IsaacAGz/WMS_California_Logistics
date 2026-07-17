@@ -94,7 +94,7 @@ Screens:
                   Height: =52
                   HoverFill: =RGBA(0, 0, 0, 0)
                   Icon: =Icon.Add
-                  OnSelect: =Navigate(Crear_Salida_Pendiente, ScreenTransition.Cover)
+                  OnSelect: =Navigate(Crear_Salida, ScreenTransition.Cover)
                   PressedFill: =RGBA(0, 0, 0, 0)
                   Width: =52
                   X: =85

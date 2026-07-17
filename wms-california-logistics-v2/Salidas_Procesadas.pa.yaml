@@ -1,17 +1,17 @@
 Screens:
-  Entradas:
+  Salidas_Procesadas:
     Properties:
       Fill: =varGlobal_Fill_Pantalla
       LoadingSpinnerColor: =RGBA(0, 120, 212, 1)
     Children:
-      - cabezera:
+      - cabezera_4:
           Control: GroupContainer
           Variant: ManualLayout
           Properties:
             Height: =80
             Width: =1366
           Children:
-            - fondo:
+            - fondo_4:
                 Control: Rectangle
                 Properties:
                   BorderColor: =RGBA(0, 18, 107, 1)
@@ -24,47 +24,7 @@ Screens:
                   HoverFill: =varGlobal_Color_Principal
                   PressedFill: =varGlobal_Color_Principal
                   Width: =1366
-            - icono_detalles:
-                Control: Classic/Icon
-                Properties:
-                  BorderColor: =RGBA(0, 0, 0, 0)
-                  Color: =Color.White
-                  DisabledBorderColor: =RGBA(245, 245, 245, 1)
-                  DisabledColor: =RGBA(225, 223, 221, 1)
-                  DisabledFill: =RGBA(0, 0, 0, 0)
-                  FocusedBorderThickness: =4
-                  Height: =52
-                  HoverFill: =RGBA(0, 0, 0, 0)
-                  Icon: =Icon.ListScrollWatchlist
-                  OnSelect: =Navigate(Reporte_Entrada, ScreenTransition.Cover)
-                  PressedFill: =RGBA(0, 0, 0, 0)
-                  Width: =47
-                  X: =177
-                  Y: =19
-            - icono_nueva_entrada:
-                Control: Classic/Icon
-                Properties:
-                  BorderColor: =RGBA(0, 0, 0, 0)
-                  Color: =Color.White
-                  DisabledBorderColor: =RGBA(245, 245, 245, 1)
-                  DisabledColor: =RGBA(59, 59, 59, 1)
-                  DisabledFill: =RGBA(0, 0, 0, 0)
-                  FocusedBorderThickness: =4
-                  Height: =57
-                  HoverFill: =RGBA(0, 0, 0, 0)
-                  Icon: =Icon.Add
-                  OnSelect: |-
-                    =Reset(cmbGuia);
-                    Reset(cmbObservaciones);
-                    Reset(cmbNombreCliente);
-                    Reset(txtTotalBultos);
-                    Reset(cmbNombreProveedor);
-                    Navigate(Crear_Entrada, ScreenTransition.Cover)
-                  PressedFill: =RGBA(0, 0, 0, 0)
-                  Width: =52
-                  X: =96
-                  Y: =14
-            - icono_home:
+            - icono_home_1:
                 Control: Classic/Icon
                 Properties:
                   BorderColor: =RGBA(0, 0, 0, 0)
@@ -81,7 +41,7 @@ Screens:
                   Width: =52
                   X: =15
                   Y: =14
-            - buscador_entradas:
+            - buscador_entradas_2:
                 Control: Classic/TextInput
                 Properties:
                   BorderColor: =RGBA(245, 245, 245, 1)
@@ -105,7 +65,7 @@ Screens:
                   Width: =367
                   X: =977
                   Y: =23
-            - titulo_pagina:
+            - titulo_pagina_4:
                 Control: Label
                 Properties:
                   BorderColor: =RGBA(0, 0, 0, 0)
@@ -118,11 +78,28 @@ Screens:
                   Font: =varGlobal_Fuente_Principal
                   Height: =56
                   Size: =20
-                  Text: ="Entradas"
-                  Width: =249
+                  Text: ="Salidas Procesadas"
+                  Width: =377
                   X: =250
                   Y: =15
-      - contenedor_galeria_entradas:
+            - icono_home_21:
+                Control: Classic/Icon
+                Properties:
+                  BorderColor: =RGBA(0, 0, 0, 0)
+                  Color: =Color.White
+                  DisabledBorderColor: =RGBA(245, 245, 245, 1)
+                  DisabledColor: =RGBA(225, 223, 221, 1)
+                  DisabledFill: =RGBA(0, 0, 0, 0)
+                  FocusedBorderThickness: =4
+                  Height: =52
+                  HoverFill: =RGBA(0, 0, 0, 0)
+                  Icon: =Icon.Add
+                  OnSelect: =Navigate(Crear_Salida,ScreenTransition.Cover)
+                  PressedFill: =RGBA(0, 0, 0, 0)
+                  Width: =52
+                  X: =87
+                  Y: =15
+      - contenedor_galeria_salidas:
           Control: GroupContainer
           Variant: ManualLayout
           Properties:
@@ -135,24 +112,17 @@ Screens:
             X: =28
             Y: =100
           Children:
-            - galeria_entradas:
+            - galeria_salidas:
                 Control: Gallery
                 Variant: BrowseLayout_Vertical_TwoTextOneImageVariant_ver5.0
                 Properties:
                   BorderColor: =RGBA(245, 245, 245, 1)
                   Fill: =varGlobal_Fill_Contenedor
                   Height: =635
-                  Items: |-
-                    =Filter(
-                        WMS_Ordenes_Entrantes,
-                        IsBlank(buscador_entradas.Text) || 
-                        buscador_entradas.Text in Title || 
-                        buscador_entradas.Text in Nombre_Cliente || 
-                        buscador_entradas.Text in Text(Fecha_Entrada, "mm/dd/yyyy")
-                    )
+                  Items: =WMS_Ordenes_Salidas
                   Width: =458
                 Children:
-                  - Image2:
+                  - Image2_1:
                       Control: Image
                       Properties:
                         BorderColor: =RGBA(0, 0, 0, 0)
@@ -166,9 +136,9 @@ Screens:
                         HoverFill: =RGBA(0, 0, 0, 0)
                         Image: |-
                           =If(
-                              IsBlank(ThisItem.Foto_Entrada), 
+                              IsBlank(ThisItem.Foto), 
                               boxes, 
-                              ThisItem.Foto_Entrada
+                              ThisItem.Foto
                           )
                         OnSelect: =Select(Parent)
                         PressedBorderColor: =RGBA(0, 0, 0, 0)
@@ -180,7 +150,7 @@ Screens:
                         Width: =72
                         X: =16
                         Y: =(Parent.TemplateHeight / 2) - (Self.Height / 2)
-                  - Title2:
+                  - Title2_1:
                       Control: Label
                       Properties:
                         BorderColor: =RGBA(0, 0, 0, 1)
@@ -195,12 +165,12 @@ Screens:
                         PaddingRight: =0
                         PaddingTop: =0
                         Size: =14
-                        Text: =ThisItem.Nombre_Cliente
+                        Text: =ThisItem.Numero_Salida
                         VerticalAlign: =VerticalAlign.Top
                         Width: =Parent.TemplateWidth - 173
                         X: =103
-                        Y: =(Parent.TemplateHeight - (Self.Size * 1.8 + Subtitle2.Size * 1.8)) / 2
-                  - Subtitle2:
+                        Y: =(Parent.TemplateHeight - (Self.Size * 1.8 + Subtitle2_1.Size * 1.8)) / 2
+                  - Subtitle2_1:
                       Control: Label
                       Properties:
                         BorderColor: =RGBA(0, 0, 0, 1)
@@ -215,12 +185,12 @@ Screens:
                         PaddingRight: =0
                         PaddingTop: =0
                         Size: =12
-                        Text: =ThisItem.Numero_Entrada
+                        Text: =ThisItem.Clientes
                         VerticalAlign: =VerticalAlign.Top
-                        Width: =Title2.Width
-                        X: =Title2.X
+                        Width: =Title2_1.Width
+                        X: =Title2_1.X
                         Y: =53
-                  - NextArrow1:
+                  - icono_editar_salidas:
                       Control: Classic/Icon
                       Properties:
                         AccessibleLabel: =Self.Tooltip
@@ -231,19 +201,19 @@ Screens:
                         Height: =50
                         Icon: =Icon.Edit
                         OnSelect: |-
-                          =Set(varEntradaEditar, ThisItem);
+                          =Set(varSalidaEditar, ThisItem);
 
-                          Set(varEstadoDetalleOriginal, ThisItem.Estado_Detalle);
+                          Set(varEstadoDetalleOriginal, ThisItem.Estado);
 
                           // Clear the staging collection and pre-load it with the boxes already saved in SharePoint
                           ClearCollect(
                               colDetalleCajasStaging, 
-                              Filter(WMS_Detalle_Cajas, Numero_Entrada = ThisItem.Numero_Entrada)
+                              Filter(WMS_Salidas_Detalles, Numero_Salida = ThisItem.Numero_Salida)
                           );
 
                           Set(varTotalCajasOriginales, CountRows(colDetalleCajasStaging));
 
-                          Navigate(Editar_Entradas, ScreenTransition.Cover)
+                          Navigate(Editar_Salidas_Procesadas, ScreenTransition.Cover)
                         PaddingBottom: =16
                         PaddingLeft: =16
                         PaddingRight: =16
@@ -252,7 +222,7 @@ Screens:
                         Width: =50
                         X: =Parent.TemplateWidth - Self.Width - 12
                         Y: =(Parent.TemplateHeight / 2) - (Self.Height / 2)
-                  - Separator2:
+                  - Separator2_1:
                       Control: Rectangle
                       Properties:
                         BorderColor: =RGBA(0, 0, 0, 0)
@@ -261,16 +231,37 @@ Screens:
                         OnSelect: =Select(Parent)
                         Width: =Parent.TemplateWidth
                         Y: =Parent.TemplateHeight - Self.Height
-                  - Rectangle3:
+                  - Rectangle3_1:
                       Control: Rectangle
                       Properties:
                         BorderColor: =RGBA(0, 0, 0, 0)
                         Fill: =varGlobal_Color_Principal
-                        Height: =Parent.TemplateHeight - Separator2.Height
+                        Height: =Parent.TemplateHeight - Separator2_1.Height
                         OnSelect: =Select(Parent)
                         Visible: =ThisItem.IsSelected
                         Width: =4
-      - detalles_entradas:
+                  - Subtitle2_2:
+                      Control: Label
+                      Properties:
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(96, 94, 92, 1)
+                        DisabledColor: =RGBA(161, 159, 157, 1)
+                        Font: =Font.'Segoe UI'
+                        FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                        Height: =Self.Size * 1.8
+                        OnSelect: =Select(Parent)
+                        PaddingBottom: =0
+                        PaddingLeft: =12
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Size: =12
+                        Text: |-
+                          ="Bultos: " & ThisItem.Cantidad_Bultos
+                        VerticalAlign: =VerticalAlign.Top
+                        Width: =Title2_1.Width
+                        X: =Title2_1.X
+                        Y: =73
+      - detalles_entradas_1:
           Control: GroupContainer
           Variant: ManualLayout
           Properties:
@@ -281,36 +272,35 @@ Screens:
             RadiusTopLeft: =20
             RadiusTopRight: =20
             Width: =849
-            X: =498
+            X: =517
             Y: =100
           Children:
-            - detalles:
+            - detalles_1:
                 Control: FormViewer
                 Layout: Vertical
                 Properties:
                   BorderColor: =RGBA(245, 245, 245, 1)
-                  DataSource: =WMS_Ordenes_Entrantes
+                  DataSource: =WMS_Ordenes_Salidas
                   Fill: =varGlobal_Fill_Contenedor
-                  Height: =635
-                  Item: =galeria_entradas.Selected
+                  Height: =391
+                  Item: =galeria_salidas.Selected
                   NumberOfColumns: =2
                   Width: =824
                 Children:
-                  - Nombre_Cliente_DataCard1:
+                  - Numero_Salida_DataCard1:
                       Control: TypedDataCard
                       Variant: ClassicTextualView
-                      IsLocked: true
                       Properties:
                         BorderColor: =RGBA(245, 245, 245, 1)
-                        DataField: ="field_2"
-                        Default: =ThisItem.Nombre_Cliente
-                        DisplayName: =DataSourceInfo([@WMS_Ordenes_Entrantes],DataSourceInfo.DisplayName,Nombre_Cliente)
+                        DataField: ="Numero_Salida"
+                        Default: =ThisItem.Numero_Salida
+                        DisplayName: =DataSourceInfo([@WMS_Ordenes_Salidas],DataSourceInfo.DisplayName,Numero_Salida)
                         Required: =false
                         Width: =412
                         X: =0
                         Y: =0
                       Children:
-                        - DataCardKey3:
+                        - DataCardKey5:
                             Control: Label
                             MetadataKey: FieldName
                             Properties:
@@ -326,12 +316,12 @@ Screens:
                               FontWeight: =FontWeight.Semibold
                               Height: =34
                               PaddingLeft: =0
-                              Text: =Parent.DisplayName
+                              Text: ="Numero de Salida"
                               Width: =Parent.Width - 60
                               Wrap: =false
                               X: =30
                               Y: =10
-                        - DataCardValue3:
+                        - DataCardValue5:
                             Control: Label
                             MetadataKey: FieldValue
                             Properties:
@@ -352,22 +342,22 @@ Screens:
                               Text: =Parent.Default
                               Width: =Parent.Width - 60
                               X: =30
-                              Y: =DataCardKey3.Y + DataCardKey3.Height + 5
-                  - Nombre_Proveedor_DataCard1:
+                              Y: =DataCardKey5.Y + DataCardKey5.Height + 5
+                  - Clientes_DataCard1:
                       Control: TypedDataCard
                       Variant: ClassicTextualView
                       IsLocked: true
                       Properties:
                         BorderColor: =RGBA(245, 245, 245, 1)
-                        DataField: ="field_3"
-                        Default: =ThisItem.Nombre_Proveedor
-                        DisplayName: =DataSourceInfo([@WMS_Ordenes_Entrantes],DataSourceInfo.DisplayName,Nombre_Proveedor)
+                        DataField: ="Clientes"
+                        Default: =ThisItem.Clientes
+                        DisplayName: =DataSourceInfo([@WMS_Ordenes_Salidas],DataSourceInfo.DisplayName,Clientes)
                         Required: =false
                         Width: =412
                         X: =1
                         Y: =0
                       Children:
-                        - DataCardKey4:
+                        - DataCardKey44:
                             Control: Label
                             MetadataKey: FieldName
                             Properties:
@@ -388,7 +378,7 @@ Screens:
                               Wrap: =false
                               X: =30
                               Y: =10
-                        - DataCardValue4:
+                        - DataCardValue39:
                             Control: Label
                             MetadataKey: FieldValue
                             Properties:
@@ -409,22 +399,22 @@ Screens:
                               Text: =Parent.Default
                               Width: =Parent.Width - 60
                               X: =30
-                              Y: =DataCardKey4.Y + DataCardKey4.Height + 5
-                  - Cantidad_bultos_DataCard1:
+                              Y: =DataCardKey44.Y + DataCardKey44.Height + 5
+                  - Guia_DataCard2:
                       Control: TypedDataCard
                       Variant: ClassicTextualView
                       IsLocked: true
                       Properties:
                         BorderColor: =RGBA(245, 245, 245, 1)
-                        DataField: ="field_5"
-                        Default: =ThisItem.Cantidad_bultos
-                        DisplayName: =DataSourceInfo([@WMS_Ordenes_Entrantes],DataSourceInfo.DisplayName,Cantidad_bultos)
+                        DataField: ="GUIA"
+                        Default: =ThisItem.Guia
+                        DisplayName: =DataSourceInfo([@WMS_Ordenes_Salidas],DataSourceInfo.DisplayName,Guia)
                         Required: =false
                         Width: =412
                         X: =0
                         Y: =1
                       Children:
-                        - DataCardKey6:
+                        - DataCardKey16:
                             Control: Label
                             MetadataKey: FieldName
                             Properties:
@@ -445,11 +435,10 @@ Screens:
                               Wrap: =false
                               X: =30
                               Y: =10
-                        - DataCardValue6:
+                        - DataCardValue16:
                             Control: Label
                             MetadataKey: FieldValue
                             Properties:
-                              AutoHeight: =true
                               BorderColor: =RGBA(0, 0, 0, 0)
                               BorderStyle: =BorderStyle.None
                               BorderThickness: =2
@@ -459,29 +448,29 @@ Screens:
                               DisplayMode: =Parent.DisplayMode
                               FocusedBorderThickness: =4
                               Font: =Font.'Segoe UI'
-                              Height: =27
+                              Height: =24
                               PaddingLeft: =0
                               PaddingRight: =0
                               PaddingTop: =0
                               Text: =Parent.Default
                               Width: =Parent.Width - 60
                               X: =30
-                              Y: =DataCardKey6.Y + DataCardKey6.Height + 5
-                  - Fecha_Entrada_DataCard1:
+                              Y: =DataCardKey16.Y + DataCardKey16.Height + 5
+                  - Cantdad_Bultos_DataCard1:
                       Control: TypedDataCard
                       Variant: ClassicTextualView
-                      IsLocked: true
                       Properties:
                         BorderColor: =RGBA(245, 245, 245, 1)
-                        DataField: ="field_7"
-                        Default: =ThisItem.Fecha_Entrada
-                        DisplayName: =DataSourceInfo([@WMS_Ordenes_Entrantes],DataSourceInfo.DisplayName,Fecha_Entrada)
+                        DataField: ="Cantdad_Bultos"
+                        Default: =ThisItem.Cantidad_Bultos
+                        DisplayName: =DataSourceInfo([@WMS_Ordenes_Salidas],DataSourceInfo.DisplayName,Cantidad_Bultos)
+                        Height: =83
                         Required: =false
                         Width: =412
                         X: =1
                         Y: =1
                       Children:
-                        - DataCardKey7:
+                        - DataCardKey45:
                             Control: Label
                             MetadataKey: FieldName
                             Properties:
@@ -497,16 +486,15 @@ Screens:
                               FontWeight: =FontWeight.Semibold
                               Height: =34
                               PaddingLeft: =0
-                              Text: =Parent.DisplayName
+                              Text: ="Cantidad de bultos"
                               Width: =Parent.Width - 60
                               Wrap: =false
                               X: =30
                               Y: =10
-                        - DataCardValue7:
+                        - DataCardValue43:
                             Control: Label
                             MetadataKey: FieldValue
                             Properties:
-                              AutoHeight: =true
                               BorderColor: =RGBA(0, 0, 0, 0)
                               BorderStyle: =BorderStyle.None
                               BorderThickness: =2
@@ -523,22 +511,22 @@ Screens:
                               Text: =Parent.Default
                               Width: =Parent.Width - 60
                               X: =30
-                              Y: =DataCardKey7.Y + DataCardKey7.Height + 5
-                  - Estado_DataCard2:
+                              Y: =DataCardKey45.Y + DataCardKey45.Height + 5
+                  - Estado_DataCard1:
                       Control: TypedDataCard
                       Variant: ClassicTextualView
                       IsLocked: true
                       Properties:
                         BorderColor: =RGBA(245, 245, 245, 1)
-                        DataField: ="field_8"
+                        DataField: ="Estado"
                         Default: =ThisItem.Estado
-                        DisplayName: =DataSourceInfo([@WMS_Ordenes_Entrantes],DataSourceInfo.DisplayName,Estado)
+                        DisplayName: =DataSourceInfo([@WMS_Ordenes_Salidas],DataSourceInfo.DisplayName,Estado)
                         Required: =false
                         Width: =412
                         X: =0
                         Y: =2
                       Children:
-                        - DataCardKey8:
+                        - DataCardKey50:
                             Control: Label
                             MetadataKey: FieldName
                             Properties:
@@ -559,7 +547,7 @@ Screens:
                               Wrap: =false
                               X: =30
                               Y: =10
-                        - DataCardValue8:
+                        - DataCardValue47:
                             Control: Label
                             MetadataKey: FieldValue
                             Properties:
@@ -580,22 +568,21 @@ Screens:
                               Text: =Parent.Default
                               Width: =Parent.Width - 60
                               X: =30
-                              Y: =DataCardKey8.Y + DataCardKey8.Height + 5
-                  - Fecha_Salida_DataCard1:
+                              Y: =DataCardKey50.Y + DataCardKey50.Height + 5
+                  - Fecha_Salida_Creada_DataCard1:
                       Control: TypedDataCard
                       Variant: ClassicTextualView
-                      IsLocked: true
                       Properties:
                         BorderColor: =RGBA(245, 245, 245, 1)
-                        DataField: ="field_9"
-                        Default: =ThisItem.Fecha_Salida
-                        DisplayName: =DataSourceInfo([@WMS_Ordenes_Entrantes],DataSourceInfo.DisplayName,Fecha_Salida)
+                        DataField: ="Fecha_Salida_Creada"
+                        Default: =ThisItem.Fecha_Salida_Creada
+                        DisplayName: =DataSourceInfo([@WMS_Ordenes_Salidas],DataSourceInfo.DisplayName,Fecha_Salida_Creada)
                         Required: =false
                         Width: =412
                         X: =1
                         Y: =2
                       Children:
-                        - DataCardKey9:
+                        - DataCardKey48:
                             Control: Label
                             MetadataKey: FieldName
                             Properties:
@@ -611,12 +598,12 @@ Screens:
                               FontWeight: =FontWeight.Semibold
                               Height: =34
                               PaddingLeft: =0
-                              Text: =Parent.DisplayName
+                              Text: ="Fecha de Salida Creada"
                               Width: =Parent.Width - 60
                               Wrap: =false
                               X: =30
                               Y: =10
-                        - DataCardValue9:
+                        - DataCardValue45:
                             Control: Label
                             MetadataKey: FieldValue
                             Properties:
@@ -637,136 +624,134 @@ Screens:
                               Text: =Parent.Default
                               Width: =Parent.Width - 60
                               X: =30
-                              Y: =DataCardKey9.Y + DataCardKey9.Height + 5
-                  - Observaciones_DataCard1:
+                              Y: =DataCardKey48.Y + DataCardKey48.Height + 5
+                  - Fecha_Salida_Pronosticada_DataCard1:
+                      Control: TypedDataCard
+                      Variant: ClassicTextualView
+                      Properties:
+                        BorderColor: =RGBA(245, 245, 245, 1)
+                        DataField: ="Fecha_Salida_Pronosticada"
+                        Default: =ThisItem.Fecha_Salida_Pronosticada
+                        DisplayName: =DataSourceInfo([@WMS_Ordenes_Salidas],DataSourceInfo.DisplayName,Fecha_Salida_Pronosticada)
+                        Required: =false
+                        Width: =412
+                        X: =0
+                        Y: =3
+                      Children:
+                        - DataCardKey49:
+                            Control: Label
+                            MetadataKey: FieldName
+                            Properties:
+                              AutoHeight: =true
+                              BorderColor: =RGBA(0, 0, 0, 0)
+                              BorderStyle: =BorderStyle.None
+                              BorderThickness: =2
+                              Color: =RGBA(50, 49, 48, 1)
+                              DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                              DisabledColor: =RGBA(161, 159, 157, 1)
+                              FocusedBorderThickness: =4
+                              Font: =Font.'Segoe UI'
+                              FontWeight: =FontWeight.Semibold
+                              Height: =34
+                              PaddingLeft: =0
+                              Text: ="Fecha Salida Pronosticada"
+                              Width: =Parent.Width - 60
+                              Wrap: =false
+                              X: =30
+                              Y: =10
+                        - DataCardValue46:
+                            Control: Label
+                            MetadataKey: FieldValue
+                            Properties:
+                              AutoHeight: =true
+                              BorderColor: =RGBA(0, 0, 0, 0)
+                              BorderStyle: =BorderStyle.None
+                              BorderThickness: =2
+                              Color: =RGBA(50, 49, 48, 1)
+                              DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                              DisabledColor: =RGBA(161, 159, 157, 1)
+                              DisplayMode: =Parent.DisplayMode
+                              FocusedBorderThickness: =4
+                              Font: =Font.'Segoe UI'
+                              Height: =27
+                              PaddingLeft: =0
+                              PaddingRight: =0
+                              PaddingTop: =0
+                              Text: =Parent.Default
+                              Width: =Parent.Width - 60
+                              X: =30
+                              Y: =DataCardKey49.Y + DataCardKey49.Height + 5
+                  - Fecha_Salida_Procesada_DataCard1:
+                      Control: TypedDataCard
+                      Variant: ClassicTextualView
+                      Properties:
+                        BorderColor: =RGBA(245, 245, 245, 1)
+                        DataField: ="Fecha_Salida_Procesada"
+                        Default: =ThisItem.Fecha_Salida_Procesada
+                        DisplayName: =DataSourceInfo([@WMS_Ordenes_Salidas],DataSourceInfo.DisplayName,Fecha_Salida_Procesada)
+                        Required: =false
+                        Width: =412
+                        X: =1
+                        Y: =3
+                      Children:
+                        - DataCardKey54:
+                            Control: Label
+                            MetadataKey: FieldName
+                            Properties:
+                              AutoHeight: =true
+                              BorderColor: =RGBA(0, 0, 0, 0)
+                              BorderStyle: =BorderStyle.None
+                              BorderThickness: =2
+                              Color: =RGBA(50, 49, 48, 1)
+                              DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                              DisabledColor: =RGBA(161, 159, 157, 1)
+                              FocusedBorderThickness: =4
+                              Font: =Font.'Segoe UI'
+                              FontWeight: =FontWeight.Semibold
+                              Height: =34
+                              PaddingLeft: =0
+                              Text: ="Fecha Salida Procesada"
+                              Width: =Parent.Width - 60
+                              Wrap: =false
+                              X: =30
+                              Y: =10
+                        - DataCardValue51:
+                            Control: Label
+                            MetadataKey: FieldValue
+                            Properties:
+                              AutoHeight: =true
+                              BorderColor: =RGBA(0, 0, 0, 0)
+                              BorderStyle: =BorderStyle.None
+                              BorderThickness: =2
+                              Color: =RGBA(50, 49, 48, 1)
+                              DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                              DisabledColor: =RGBA(161, 159, 157, 1)
+                              DisplayMode: =Parent.DisplayMode
+                              FocusedBorderThickness: =4
+                              Font: =Font.'Segoe UI'
+                              Height: =27
+                              PaddingLeft: =0
+                              PaddingRight: =0
+                              PaddingTop: =0
+                              Text: =Parent.Default
+                              Width: =Parent.Width - 60
+                              X: =30
+                              Y: =DataCardKey54.Y + DataCardKey54.Height + 5
+                  - Observaciones_DataCard3:
                       Control: TypedDataCard
                       Variant: ClassicTextualView
                       IsLocked: true
                       Properties:
                         BorderColor: =RGBA(245, 245, 245, 1)
-                        DataField: ="field_6"
+                        DataField: ="Observaciones"
                         Default: =ThisItem.Observaciones
-                        DisplayName: =DataSourceInfo([@WMS_Ordenes_Entrantes],DataSourceInfo.DisplayName,Observaciones)
-                        Required: =false
-                        Width: =412
-                        X: =0
-                        Y: =3
-                      Children:
-                        - DataCardKey10:
-                            Control: Label
-                            MetadataKey: FieldName
-                            Properties:
-                              AutoHeight: =true
-                              BorderColor: =RGBA(0, 0, 0, 0)
-                              BorderStyle: =BorderStyle.None
-                              BorderThickness: =2
-                              Color: =RGBA(50, 49, 48, 1)
-                              DisabledBorderColor: =RGBA(0, 0, 0, 0)
-                              DisabledColor: =RGBA(161, 159, 157, 1)
-                              FocusedBorderThickness: =4
-                              Font: =Font.'Segoe UI'
-                              FontWeight: =FontWeight.Semibold
-                              Height: =34
-                              PaddingLeft: =0
-                              Text: =Parent.DisplayName
-                              Width: =Parent.Width - 60
-                              Wrap: =false
-                              X: =30
-                              Y: =10
-                        - DataCardValue10:
-                            Control: Label
-                            MetadataKey: FieldValue
-                            Properties:
-                              AutoHeight: =true
-                              BorderColor: =RGBA(0, 0, 0, 0)
-                              BorderStyle: =BorderStyle.None
-                              BorderThickness: =2
-                              Color: =RGBA(50, 49, 48, 1)
-                              DisabledBorderColor: =RGBA(0, 0, 0, 0)
-                              DisabledColor: =RGBA(161, 159, 157, 1)
-                              DisplayMode: =Parent.DisplayMode
-                              FocusedBorderThickness: =4
-                              Font: =Font.'Segoe UI'
-                              Height: =27
-                              PaddingLeft: =0
-                              PaddingRight: =0
-                              PaddingTop: =0
-                              Text: =Parent.Default
-                              Width: =Parent.Width - 60
-                              X: =30
-                              Y: =DataCardKey10.Y + DataCardKey10.Height + 5
-                  - Estado_Detalle_DataCard1:
-                      Control: TypedDataCard
-                      Variant: ClassicTextualView
-                      IsLocked: true
-                      Properties:
-                        BorderColor: =RGBA(245, 245, 245, 1)
-                        DataField: ="Estado_Detalle"
-                        Default: =ThisItem.Estado_Detalle
-                        DisplayName: =DataSourceInfo([@WMS_Ordenes_Entrantes],DataSourceInfo.DisplayName,Estado_Detalle)
-                        Required: =false
-                        Width: =412
-                        X: =1
-                        Y: =3
-                      Children:
-                        - DataCardKey11:
-                            Control: Label
-                            MetadataKey: FieldName
-                            Properties:
-                              AutoHeight: =true
-                              BorderColor: =RGBA(0, 0, 0, 0)
-                              BorderStyle: =BorderStyle.None
-                              BorderThickness: =2
-                              Color: =RGBA(50, 49, 48, 1)
-                              DisabledBorderColor: =RGBA(0, 0, 0, 0)
-                              DisabledColor: =RGBA(161, 159, 157, 1)
-                              FocusedBorderThickness: =4
-                              Font: =Font.'Segoe UI'
-                              FontWeight: =FontWeight.Semibold
-                              Height: =34
-                              PaddingLeft: =0
-                              Text: =Parent.DisplayName
-                              Width: =Parent.Width - 60
-                              Wrap: =false
-                              X: =30
-                              Y: =10
-                        - DataCardValue11:
-                            Control: Label
-                            MetadataKey: FieldValue
-                            Properties:
-                              AutoHeight: =true
-                              BorderColor: =RGBA(0, 0, 0, 0)
-                              BorderStyle: =BorderStyle.None
-                              BorderThickness: =2
-                              Color: =RGBA(50, 49, 48, 1)
-                              DisabledBorderColor: =RGBA(0, 0, 0, 0)
-                              DisabledColor: =RGBA(161, 159, 157, 1)
-                              DisplayMode: =Parent.DisplayMode
-                              FocusedBorderThickness: =4
-                              Font: =Font.'Segoe UI'
-                              Height: =27
-                              PaddingLeft: =0
-                              PaddingRight: =0
-                              PaddingTop: =0
-                              Text: =Parent.Default
-                              Width: =Parent.Width - 60
-                              X: =30
-                              Y: =DataCardKey11.Y + DataCardKey11.Height + 5
-                  - Title_DataCard1:
-                      Control: TypedDataCard
-                      Variant: ClassicTextualView
-                      IsLocked: true
-                      Properties:
-                        BorderColor: =RGBA(245, 245, 245, 1)
-                        DataField: ="Title"
-                        Default: =ThisItem.Title
-                        DisplayName: =DataSourceInfo([@WMS_Ordenes_Entrantes],DataSourceInfo.DisplayName,Title)
+                        DisplayName: =DataSourceInfo([@WMS_Ordenes_Salidas],DataSourceInfo.DisplayName,Observaciones)
                         Required: =false
                         Width: =412
                         X: =0
                         Y: =4
                       Children:
-                        - DataCardKey2:
+                        - DataCardKey46:
                             Control: Label
                             MetadataKey: FieldName
                             Properties:
@@ -787,7 +772,7 @@ Screens:
                               Wrap: =false
                               X: =30
                               Y: =10
-                        - DataCardValue2:
+                        - DataCardValue44:
                             Control: Label
                             MetadataKey: FieldValue
                             Properties:
@@ -808,4 +793,60 @@ Screens:
                               Text: =Parent.Default
                               Width: =Parent.Width - 60
                               X: =30
-                              Y: =DataCardKey2.Y + DataCardKey2.Height + 5
+                              Y: =DataCardKey46.Y + DataCardKey46.Height + 5
+                  - Numero_Entradas_DataCard1:
+                      Control: TypedDataCard
+                      Variant: ClassicTextualView
+                      Properties:
+                        BorderColor: =RGBA(245, 245, 245, 1)
+                        DataField: ="Numero_Entradas"
+                        Default: =ThisItem.Numero_Entradas
+                        DisplayName: =DataSourceInfo([@WMS_Ordenes_Salidas],DataSourceInfo.DisplayName,Numero_Entradas)
+                        Height: =89
+                        Required: =false
+                        Width: =412
+                        X: =1
+                        Y: =4
+                      Children:
+                        - DataCardKey15:
+                            Control: Label
+                            MetadataKey: FieldName
+                            Properties:
+                              AutoHeight: =true
+                              BorderColor: =RGBA(0, 0, 0, 0)
+                              BorderStyle: =BorderStyle.None
+                              BorderThickness: =2
+                              Color: =RGBA(50, 49, 48, 1)
+                              DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                              DisabledColor: =RGBA(161, 159, 157, 1)
+                              FocusedBorderThickness: =4
+                              Font: =Font.'Segoe UI'
+                              FontWeight: =FontWeight.Semibold
+                              Height: =34
+                              PaddingLeft: =0
+                              Text: ="Entradas registradas"
+                              Width: =Parent.Width - 60
+                              Wrap: =false
+                              X: =30
+                              Y: =10
+                        - DataCardValue15:
+                            Control: Label
+                            MetadataKey: FieldValue
+                            Properties:
+                              BorderColor: =RGBA(0, 0, 0, 0)
+                              BorderStyle: =BorderStyle.None
+                              BorderThickness: =2
+                              Color: =RGBA(50, 49, 48, 1)
+                              DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                              DisabledColor: =RGBA(161, 159, 157, 1)
+                              DisplayMode: =Parent.DisplayMode
+                              FocusedBorderThickness: =4
+                              Font: =Font.'Segoe UI'
+                              Height: =35
+                              PaddingLeft: =0
+                              PaddingRight: =0
+                              PaddingTop: =0
+                              Text: =Parent.Default
+                              Width: =Parent.Width - 60
+                              X: =30
+                              Y: =DataCardKey15.Y + DataCardKey15.Height + 5
